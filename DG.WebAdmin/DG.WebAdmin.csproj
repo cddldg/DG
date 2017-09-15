@@ -16,4 +16,8 @@
     <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DG.Infrastructure\DG.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
