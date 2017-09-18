@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using DG.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace DG.WebAdmin
 {
@@ -24,7 +25,9 @@ namespace DG.WebAdmin
         {
             services.AddMvc();
             //Sqlite
-            services.AddEntityFrameworkSqlite().AddDbContext<DatabaseContext>();
+            //services.AddEntityFrameworkSqlite().AddDbContext<DatabaseContext>();
+            services.AddDbContext<MyContext>(opt=>opt.UseSqlite("Data Source=App_Data/DG.db"));
+            //services.AddDbContext<MyContext>(opt => opt.UseSqlServer(@"Server=.;Database=DG;User ID=sa;Password=111111;Trusted_Connection=False;"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,11 +51,6 @@ namespace DG.WebAdmin
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            //Sqlite
-            using (var client = new DatabaseContext())
-            {
-                client.Database.EnsureCreated();
-            }
         }
     }
 }
