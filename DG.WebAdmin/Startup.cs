@@ -51,7 +51,7 @@ namespace DG.WebAdmin
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}"
                     );
-                //webapi路由 使用DG.WebApi
+                //webapi路由 使用DG.Controllers.WebApi
                 routes.MapRoute(
                     name: "api",
                     template: "api/{controller}/{action}/{id}",

@@ -12,4 +12,5 @@ namespace DG.Infrastructure
         }
         public DbSet<Category> Categories { get; set; }
     }
+
 }
