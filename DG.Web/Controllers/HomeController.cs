@@ -4,14 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using DG.WebAdmin.Models;
-using DG.Infrastructure;
-using static DG.Infrastructure.MyContext;
-using DG.Core.Entities;
+using DG.Web.Models;
 using DGCore.ChineseCalendar;
-using System.Text;
 
-namespace DG.WebAdmin.Controllers
+namespace DG.Web.Controllers
 {
     public class HomeController : Controller
     {
@@ -22,6 +18,20 @@ namespace DG.WebAdmin.Controllers
                 ChineseCalendarInfo = CNCalendarHelper.GetChineseCalendar(DateTime.Now)
             };
             return View(model);
+        }
+
+        public IActionResult About()
+        {
+            ViewData["Message"] = "dldg";
+
+            return View();
+        }
+
+        public IActionResult Contact()
+        {
+            ViewData["Message"] = "dldg";
+
+            return View();
         }
 
         public IActionResult Error()

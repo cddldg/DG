@@ -1,0 +1,29 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+@using  System.Text
+<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
+
+    @if (Model != null)
+    {
+        StringBuilder dayInfo = new StringBuilder();
+        dayInfo.Append("阳历：" + Model.ChineseCalendarInfo.DateString + "<br>");
+        dayInfo.Append("农历：" + Model.ChineseCalendarInfo.ChineseDateString + "<br>");
+        dayInfo.Append("星期：" + Model.ChineseCalendarInfo.WeekDayStr);
+        dayInfo.Append("时辰：" + Model.ChineseCalendarInfo.ChineseHour + "<br>");
+        dayInfo.Append("属相：" + Model.ChineseCalendarInfo.AnimalString + "<br>");
+        dayInfo.Append("节气：" + Model.ChineseCalendarInfo.ChineseTwentyFourDay + "<br>");
+        dayInfo.Append("前一个节气：" + Model.ChineseCalendarInfo.ChineseTwentyFourPrevDay + "<br>");
+        dayInfo.Append("下一个节气：" + Model.ChineseCalendarInfo.ChineseTwentyFourNextDay + "<br>");
+        dayInfo.Append("节日：" + Model.ChineseCalendarInfo.DateHoliday + "<br>");
+        dayInfo.Append("节日(农)：" + Model.ChineseCalendarInfo.NewCalendarHoliday + "<br>");
+        dayInfo.Append("干支：" + Model.ChineseCalendarInfo.GanZhiDateString + "<br>");
+        dayInfo.Append("星宿：" + Model.ChineseCalendarInfo.ChineseConstellation + "<br>");
+        dayInfo.Append("星座：" + Model.ChineseCalendarInfo.Constellation + "<br>");
+        string showCCa = dayInfo.ToString();
+
+        @Html.Raw(dayInfo);
+    }
+</div>
+
+
