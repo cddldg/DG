@@ -26,7 +26,7 @@ namespace DG.WebAdmin
             services.AddMvc();
             //Sqlite
             //services.AddEntityFrameworkSqlite().AddDbContext<DatabaseContext>();
-            services.AddDbContext<MyContext>(opt=>opt.UseSqlite("Data Source=App_Data/DG.db"));
+            services.AddDbContext<MyContext>(opt => opt.UseSqlite("Data Source=App_Data/DG.db"));
             //services.AddDbContext<MyContext>(opt => opt.UseSqlServer(@"Server=.;Database=DG;User ID=sa;Password=111111;Trusted_Connection=False;"));
         }
 
@@ -49,8 +49,17 @@ namespace DG.WebAdmin
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}"
+                    );
+                //webapi路由 使用DG.WebApi
+                routes.MapRoute(
+                    name: "api",
+                    template: "api/{controller}/{action}/{id}",
+                    defaults: new[] { "DG.Controllers.WebApi" }
+                    );
             });
+
+
         }
     }
 }
