@@ -25,9 +25,10 @@ namespace DG.WebAdmin
         {
             services.AddMvc();
             //Sqlite
-            //services.AddEntityFrameworkSqlite().AddDbContext<DatabaseContext>();
-            services.AddDbContext<MyContext>(opt => opt.UseSqlite("Data Source=App_Data/DG.db"));
+            services.AddDbContext<MyContext>(opt => opt.UseSqlite(Configuration["ConnectionStrings:Default"]));
+            //Mssql
             //services.AddDbContext<MyContext>(opt => opt.UseSqlServer(@"Server=.;Database=DG;User ID=sa;Password=111111;Trusted_Connection=False;"));
+            AuthConfigurer.Configure(services, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,12 +52,30 @@ namespace DG.WebAdmin
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}"
                     );
-                //webapi路由 使用DG.Controllers.WebApi
-                routes.MapRoute(
-                    name: "api",
-                    template: "api/{controller}/{action}/{id}",
-                    defaults: new[] { "DG.Controllers.WebApi" }
-                    );
+                ///webapi解耦（随时可以独立出去） 使用DG.Controllers.WebApi(引用就可以)有多种方法：采用中间件方式，Application Model等这里介绍用简单路由配置的方式：
+                /// 1、使用路由：添加路由规则即可
+                ///     首先
+                ///     routes.MapRoute(
+                ///        name: "api",
+                ///        template: "api/{controller}/{action}/{id?}"
+                ///        );
+                ///     然后在控制器上添加标签关键是"api"前缀名称要相同
+                ///     [Produces("application/json")]
+                ///     [Route("api/[controller]/[action]")]
+                ///     public class ApiBaseController : Controller
+                ///     {
+                ///     }
+                /// 2、使用域
+                ///     首先添域路由规则
+                ///     routes.MapAreaRoute("api_route", "api","api/{controller}/{action}/{id?}");
+                ///     然后在控制器添加标签关键是“api”域名称要相同
+                ///     [Produces("application/json")]
+                ///     [Area("api")]
+                ///     public class ApiBaseController : Controller
+                ///     {
+                ///     }
+
+                routes.MapAreaRoute("api_route", "api", "api/{controller}/{action}/{id?}");
             });
 
 

@@ -10,24 +10,27 @@ using DGCore.Linq;
 
 namespace DG.Controllers.WebApi
 {
-    [Produces("application/json")]
-    [Route("api/Category")]
-    public class CategoryController: Controller
+    
+    public class CategoryController: ApiBaseController
     {
         private MyContext _myContext;
         public CategoryController(MyContext myContext)
         {
             _myContext = myContext;
         }
+
         [HttpGet]
-        public List<Category> Get(int pageNo,int pageSize)
+        public int ShowAndOne(int id)
+        {
+            
+            return id + 1;
+        }
+        [HttpGet]
+        public List<Category> GetCategoyPage(int pageNo,int pageSize)
         {
             var model = _myContext.Categories.PageBy(out int c, pageNo, pageSize, p => p.SysNo).ToList();
             var ps = c;
             return model;
-        }
-
-
-        
+        }   
     }
 }
