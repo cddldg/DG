@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using DG.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using MySQL.Data.EntityFrameworkCore.Extensions;
 
 namespace DG.WebAdmin
 {
@@ -25,9 +26,12 @@ namespace DG.WebAdmin
         {
             services.AddMvc();
             //Sqlite
-            services.AddDbContext<MyContext>(opt => opt.UseSqlite(Configuration["ConnectionStrings:Default"]));
+            //services.AddDbContext<MyContext>(opt => opt.UseSqlite(Configuration["ConnectionStrings:Sqlite"]));
             //Mssql
-            //services.AddDbContext<MyContext>(opt => opt.UseSqlServer(@"Server=.;Database=DG;User ID=sa;Password=111111;Trusted_Connection=False;"));
+            //services.AddDbContext<MyContext>(opt => opt.UseSqlServer(Configuration["ConnectionStrings:Mssql"]));
+            //Mysql
+            services.AddDbContext<MyContext>(opt => opt.UseMySQL(Configuration["ConnectionStrings:Mysql"]));
+
             AuthConfigurer.Configure(services, Configuration);
         }
 
