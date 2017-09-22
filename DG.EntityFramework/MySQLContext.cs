@@ -1,16 +1,21 @@
 ﻿using DG.Core.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
-namespace DG.Infrastructure
+namespace DG.EntityFramework
 {
-    public class MyContext : DbContext
+    public class MySQLContext:DbContext
     {
-        public MyContext(DbContextOptions<MyContext> option) : base(option) => Database.EnsureCreated();
-        public DbSet<Category> Category { get; set; }
-
+        public MySQLContext(DbContextOptions<MySQLContext> option) : base(option)
+        {
+            Database.EnsureCreated();
+            //Database.Log = sql => Debug.Write(sql);
+        }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -42,6 +47,9 @@ namespace DG.Infrastructure
                 entry.Property("UpdatedTimestamp").CurrentValue = DateTime.UtcNow;
             }
         }
-    }
 
+        #region DbSet
+        public DbSet<Category> Category { get; set; }
+        #endregion
+    }
 }

@@ -13,9 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DG.Domain", "DG.Domain\DG.D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DG.Infrastructure", "DG.Infrastructure\DG.Infrastructure.csproj", "{1B297E80-94EE-4AFB-BAF0-1B09CCF56F84}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03_Test", "03_Test", "{EAB4EC8D-BE6C-494F-9985-DEECA0C9122B}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04_Test", "04_Test", "{EAB4EC8D-BE6C-494F-9985-DEECA0C9122B}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02_Web", "02_Web", "{45FDF644-5C4A-4910-A4B6-46692CEF5493}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03_Web", "03_Web", "{45FDF644-5C4A-4910-A4B6-46692CEF5493}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DG.Test", "DG.Test\DG.Test.csproj", "{925D818D-1193-437D-B8D0-8BDFBF4B4BB1}"
 EndProject
@@ -23,9 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DG.Web", "DG.Web\DG.Web.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DG.Controllers.WebApi", "DG.Controllers.WebApi\DG.Controllers.WebApi.csproj", "{55059810-7470-4F98-8CDF-90701B50776C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DG.EntityFramework", "DG.EntityFramework\DG.EntityFramework.csproj", "{B2B34FEF-BB01-45E6-A81E-475F6DEE5CE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DG.EntityFramework", "DG.EntityFramework\DG.EntityFramework.csproj", "{B2B34FEF-BB01-45E6-A81E-475F6DEE5CE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DG.Web.Core", "DG.Web.Core\DG.Web.Core.csproj", "{7334E144-6952-4991-8549-517D1CE01D65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DG.Web.Core", "DG.Web.Core\DG.Web.Core.csproj", "{7334E144-6952-4991-8549-517D1CE01D65}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02_DataAccess", "02_DataAccess", "{D3CF1642-814B-43BC-B1A0-4B3C4A131F57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

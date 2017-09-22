@@ -6,12 +6,16 @@
 
   <ItemGroup>
     <Folder Include="EntityFramework\" />
-    <Folder Include="Repositories\" />
+    <Folder Include="EntityFramework\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DG.Core\DG.Core.csproj" />
   </ItemGroup>
 
 </Project>

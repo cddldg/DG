@@ -25,13 +25,8 @@ namespace DG.WebAdmin
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            //Sqlite
-            //services.AddDbContext<MyContext>(opt => opt.UseSqlite(Configuration["ConnectionStrings:Sqlite"]));
-            //Mssql
-            //services.AddDbContext<MyContext>(opt => opt.UseSqlServer(Configuration["ConnectionStrings:Mssql"]));
-            //Mysql
             services.AddDbContext<MyContext>(opt => opt.UseMySQL(Configuration["ConnectionStrings:Mysql"]));
-
+            //services.AddScoped<IDataAccessProvider, DataAccessMySqlProvider.DataAccessMySqlProvider>();
             AuthConfigurer.Configure(services, Configuration);
         }
 

@@ -28,7 +28,7 @@ namespace DG.Controllers.WebApi
         [HttpGet]
         public List<Category> GetCategoyPage(int pageNo,int pageSize)
         {
-            var model = _myContext.Categories.PageBy(out int c, pageNo, pageSize, p => p.SysNo).ToList();
+            var model = _myContext.Category.PageBy(out int c, pageNo, pageSize, p => p.SysNo).ToList();
             var ps = c;
             return model;
         }   
