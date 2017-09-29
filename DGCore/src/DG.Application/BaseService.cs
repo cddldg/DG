@@ -7,62 +7,35 @@ using System.Text;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using DG.EntityFramework;
+using ACC.AutoMapper;
+using AutoMapper;
 
 namespace DG.Application
 {
-    public  class BaseService<T> : IDGDbContextBase<T> where T : BaseEntiy
+    public abstract  class BaseService<TEntity> : IBaseService<TEntity> where TEntity : BaseEntiy
     {
-        protected readonly MySqlDbContext db;
-        protected readonly DbSet<T> set;
-        protected readonly ILogger _logger; 
-        
-        public BaseService(MySqlDbContext _db, ILoggerFactory loggerFactory)
+        protected readonly DGDbContext _dbContext;
+        protected readonly DbSet<TEntity> _dbSet;
+        public BaseService(DGDbContext _db)
         {
-            db = _db;
-            set = db.Set<T>();
-            _logger=loggerFactory.CreateLogger<BaseService<T>>();
-        }
-        public void Add(T entity)
-        {
-            set.Add(entity);
-            db.SaveChanges();
+            _dbContext = _db;
+            _dbSet = _dbContext.Set<TEntity>();
         }
 
-        public long AddOutID(T entity)
+        public TEntity AddForDto<TInDto>(TInDto inDto)
         {
-            var model = set.Add(entity);
-            db.SaveChanges();
-            return model == null ? 0 : model.Entity.ID;
+            var entity = inDto.MapTo<TInDto, TEntity>();
+            var model=_dbSet.Add(entity).Entity;
+            _dbContext.SaveChanges();
+            return model;
         }
 
-        public bool Delete(long id)
+        public void Dispose()
         {
-            var soure = set.Single(p=>p.ID==id);
-            var model = set.Remove(soure);
-            db.SaveChanges();
-            return model != null;
+            if(_dbContext!=null)
+            {
+                _dbContext.Dispose();
+            }
         }
-
-        public IList<T> GetAll()
-        {
-            return set.ToList();
-        }
-
-        public IList<T> GetAll(Expression<Func<T, bool>> where)
-        {
-            return set.Where(where).ToList();
-        }
-
-        public T GetSingle(long id)
-        {
-            return set.Single(p=>p.ID==id);
-        }
-
-        public bool Update(T entity)
-        {
-            var model = set.Update(entity);
-            db.SaveChanges();
-            return model != null;
-        } 
     }
 }

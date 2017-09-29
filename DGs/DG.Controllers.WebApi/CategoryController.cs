@@ -22,7 +22,6 @@ namespace DG.Controllers.WebApi
         [HttpGet]
         public int ShowAndOne(int id)
         {
-            
             return id + 1;
         }
         [HttpGet]

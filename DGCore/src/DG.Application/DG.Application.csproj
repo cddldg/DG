@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ACC\ACC.csproj" />
     <ProjectReference Include="..\DG.EntityFramework\DG.EntityFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Menu\" />
   </ItemGroup>
 
 </Project>

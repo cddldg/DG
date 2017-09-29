@@ -1,16 +1,12 @@
-﻿using System;
+﻿using DG.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace DG.Core.Entities
+namespace DG.Application.Member.Dtos
 {
-    /// <summary>
-    /// 会员实体
-    /// </summary>
-    [Table("Member")]
-    public class Member: BaseEntiy
+    public class MemberOutput:BaseDto
     {
         /// <summary>
         /// 会员用户名
@@ -27,11 +23,12 @@ namespace DG.Core.Entities
         /// 性别
         /// </summary>
         public string Gender { get; set; }
-        
+
 
         /// <summary>
         /// 会员真实姓名
         /// </summary>
+        [MaxLength(MemberEntity.MaxNameLength)]
         public string Name { get; set; }
 
         /// <summary>
@@ -43,5 +40,11 @@ namespace DG.Core.Entities
         /// 会员头像地址
         /// </summary>
         public string HeadImg { get; set; }
+
+        /// <summary>
+        /// 简介
+        /// </summary>
+        [MaxLength(MemberEntity.MaxDescriptionLength)]
+        public string Description { get; set; }
     }
 }

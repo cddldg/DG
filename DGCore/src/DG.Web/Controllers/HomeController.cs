@@ -1,31 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using ACC.Safety;
+using DG.Application.Member;
 using DG.Web.Models;
-using DG.EntityFramework;
-using DG.Core.Entities;
-using DG.Application;
-using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
 
 namespace DG.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private MenuService _service;
-        public HomeController(MySqlDbContext dbcontext)
+        private IMemberService _memberService;
+        public HomeController(IMemberService memberService)
         {
-            _service = new MenuService(dbcontext,new LoggerFactory());
+            _memberService = memberService;
         }
         public IActionResult Index()
         {
-            var model= _service.GetAll();
-            var pp = _service.CheangeUrl(1, "/sd/ss");
+            
+            //string encryptedOldPassword = PasswordHelper.Encrypt(oldPassword, userLogOn.UserSecretkey);
             return View();
         }
-
+        
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });

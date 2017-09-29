@@ -11,7 +11,7 @@ namespace DG.Core.Entities
     /// 菜单实体
     /// </summary>
     [Table("Menu")]
-    public class Menu: BaseEntiy
+    public class MenuEntity : BaseEntiy
     {
         /// <summary>
         /// 父ID

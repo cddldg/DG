@@ -5,12 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ACC\ACC.csproj" />
-    <ProjectReference Include="..\DG.Core\DG.Core.csproj" />
+    <ProjectReference Include="..\DG.Application\DG.Application.csproj" />
   </ItemGroup>
 
 </Project>

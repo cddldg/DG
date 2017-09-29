@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DG.Application\DG.Application.csproj" />
+    <ProjectReference Include="..\DG.Controllers.Api\DG.Controllers.Api.csproj" />
     <ProjectReference Include="..\DG.EntityFramework\DG.EntityFramework.csproj" />
   </ItemGroup>
 
