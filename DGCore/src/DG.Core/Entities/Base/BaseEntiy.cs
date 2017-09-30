@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-
 using System.Collections;
 using System.ComponentModel.DataAnnotations;
+using ACC.Convert;
 
 namespace DG.Core.Entities
 {
@@ -42,7 +42,7 @@ namespace DG.Core.Entities
         /// <returns></returns>
         public override string ToString()
         {
-            return "";//this.ObjToJsonString();
+            return this.ToJson();
         }
     }
 }

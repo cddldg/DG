@@ -1,22 +1,18 @@
-﻿using ACC.Safety;
+﻿using ACC.MVC;
+using ACC.Safety;
 using DG.Application.Member;
 using DG.Web.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System.Diagnostics;
 
 namespace DG.Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private IMemberService _memberService;
-        public HomeController(IMemberService memberService)
-        {
-            _memberService = memberService;
-        }
         public IActionResult Index()
         {
-            
-            //string encryptedOldPassword = PasswordHelper.Encrypt(oldPassword, userLogOn.UserSecretkey);
             return View();
         }
         

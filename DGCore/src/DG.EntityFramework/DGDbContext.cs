@@ -10,26 +10,22 @@ namespace DG.EntityFramework
 {
     public class DGDbContext: DbContext
     {
-
         private ILogger log ;
-        //public MySqlDbContext(DbContextOptions<MySqlDbContext> options) : base(options)
-        //{
-        //    log = new LoggerFactory().CreateLogger<MySqlDbContext>();
-        //    Database.EnsureCreated();
-
-        //}
         public DGDbContext(DbContextOptions<DGDbContext> options, ILoggerFactory loggerFactory) : base(options)
         {
             log = loggerFactory.CreateLogger<DGDbContext>();
+            //没有就创建数据库
             Database.EnsureCreated();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            
+
+            #region 需要创建的实体
             modelBuilder.Entity<MenuEntity>();
-            modelBuilder.Entity<MemberEntity>(); 
+            modelBuilder.Entity<MemberEntity>();  
+            #endregion
         }
         public override int SaveChanges()
         {
@@ -37,23 +33,30 @@ namespace DG.EntityFramework
             var entities=ChangeTracker.Entries().Where(e => e.State == EntityState.Added || e.State == EntityState.Modified || e.State == EntityState.Deleted);
             foreach (var entry in entities)
             {
+                #region 自动生成增删改的基础数据：id，time
                 string name = entry.State.ToString();
+                string userId = "0";
                 if (entry.State == EntityState.Added)
                 {
-                    entry.Property("CreateTime").CurrentValue = DateTime.UtcNow;
+                    entry.Property("CreateTime").CurrentValue = DateTime.Now;
                     entry.Property("ID").CurrentValue = ACC.Common.ID.CreateSnowflakeId;
+                    userId = entry.Property("CreateUserID").CurrentValue.ToString();
                     name = "添加";
                 }
                 if (entry.State == EntityState.Modified)
                 {
-                    entry.Property("UpdateTime").CurrentValue = DateTime.UtcNow;
+                    entry.Property("UpdateTime").CurrentValue = DateTime.Now;
+                    userId = entry.Property("UpdateUserID").CurrentValue.ToString();
                     name = "修改";
                 }
                 if (entry.State == EntityState.Deleted)
                 {
+                    userId = entry.Property("UpdateUserID").CurrentValue.ToString();
                     name = "删除";
-                }
-                log.LogDebug($"[State:{entry.State.ToString()}]{name}{entry.Entity.GetType()}数据[key:{entry.Property("ID").CurrentValue}]");
+                } 
+                #endregion
+
+                log.LogInformation($"用户[{userId}]于[{DateTime.Now}][{name}][{entry.Entity.GetType()}]数据[{entry.Entity.ToString()}]");
             }
             return base.SaveChanges();
         }
