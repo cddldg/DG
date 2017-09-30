@@ -16,14 +16,20 @@ using NLog.Extensions.Logging;
 using NLog.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.IO;
 
 namespace DG.Web
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IHostingEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                     .SetBasePath(env.ContentRootPath)
+                     .AddJsonFile(Path.Combine("Configs", "appsettings.json"), optional: true, reloadOnChange: true)  
+                     .AddJsonFile(Path.Combine("Configs", $"appsettings.{env.EnvironmentName}.json"), optional: true, reloadOnChange: true)
+                     .AddEnvironmentVariables();                                              
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -62,7 +68,7 @@ namespace DG.Web
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             /* NLog */
-            env.ConfigureNLog("nlog.config");
+            env.ConfigureNLog(Path.Combine("Configs", "nlog.config"));
             loggerFactory.AddNLog();
             app.AddNLogWeb();
 
