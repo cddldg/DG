@@ -32,6 +32,12 @@ namespace DG.Controllers.Api
         }
 
 
-        
+        public long Del(long id)
+        {
+
+            var p = _memberService.DeleteByKey(id);
+            return p;
+        }
+
     }
 }

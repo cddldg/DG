@@ -35,7 +35,12 @@ namespace DG.Core.Entities
         /// 最后更新时间
         /// </summary>
         public DateTime? UpdateTime { get; set; }
-        
+
+        /// <summary>
+        /// 是否删除
+        /// </summary>
+        public bool IsDeleted { get; set; }
+
         /// <summary>
         /// toJsonString
         /// </summary>

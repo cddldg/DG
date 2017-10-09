@@ -40,6 +40,7 @@ namespace DG.EntityFramework
                 {
                     entry.Property("CreateTime").CurrentValue = DateTime.Now;
                     entry.Property("ID").CurrentValue = ACC.Common.ID.CreateSnowflakeId;
+                    entry.Property("IsDeleted").CurrentValue = false; 
                     userId = entry.Property("CreateUserID").CurrentValue.ToString();
                     name = "添加";
                 }

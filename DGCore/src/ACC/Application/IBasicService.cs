@@ -14,18 +14,7 @@ namespace ACC.Application
         // T GetByKey(object key);
         // List<T> GetList<T>();
         // List<TEntity> GetList<TEntity>(Expression<Func<TEntity, bool>> predicate);
-        // int Delete<TEntity>(Expression<Func<TEntity, bool>> predicate);
-        // int Delete<TEntity>(TEntity entity);
-        // int DeleteByKey<TEntity>(object key);
-        // int SoftDelete<TEntity>(object key);
-        // /// <summary>
-        // /// 
-        // /// </summary>
-        // /// <typeparam name="TEntity"></typeparam>
-        // /// <param name="key"></param>
-        // /// <param name="deleteUserId">执行删除操作的用户Id</param>
-        // /// <returns></returns>
-        // int SoftDelete<TEntity>(object key, object deleteUserId);
+        
         // TEntity Add<TEntity>(TEntity entity);
         // /// <summary>
         // /// 传入一个 dto 对象，插入相应的数据
@@ -47,5 +36,18 @@ namespace ACC.Application
         // int UpdateFromDto<TEntity, TDto>(TDto dto);
 
         TEntiy AddForDto<TInDto>(TInDto inDto);
+
+        //int Delete(Expression<Func<TEntiy, bool>> predicate);
+        long Delete(TEntiy entity);
+        long DeleteByKey(object key);
+        //int SoftDelete(object key);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="key"></param>
+        /// <param name="deleteUserId">执行删除操作的用户Id</param>
+        /// <returns></returns>
+        //int SoftDelete(object key, object deleteUserId);
     }
 }

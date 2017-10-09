@@ -30,6 +30,22 @@ namespace DG.Application
             return model;
         }
 
+        public long Delete(TEntity entity)
+        {
+             entity = _dbSet.Remove(entity).Entity;
+            
+            _dbContext.SaveChanges();
+            return entity.ID;
+        }
+
+        public long DeleteByKey(object key)
+        {
+            TEntity entity = _dbSet.Find(key);
+
+
+            return Delete(entity);
+        }
+
         public void Dispose()
         {
             if(_dbContext!=null)
