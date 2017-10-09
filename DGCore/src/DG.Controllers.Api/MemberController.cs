@@ -18,14 +18,15 @@ namespace DG.Controllers.Api
 
         public MemberController(IMemberService memberService) 
         {
-            
             _memberService = memberService;
+            
         }
         
         
         [HttpPost]
         public MemberOutput Add(AddMemberInput input)
         {
+
             var p = _memberService.Add(input);
             return p;
         }

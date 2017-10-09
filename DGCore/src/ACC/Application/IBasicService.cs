@@ -9,7 +9,7 @@ namespace ACC.Application
     /// 实体基础操作业务服务
     /// </summary>
     /// <typeparam name="TEntiy">实体</typeparam>
-    public interface IBasicEntityService<TEntiy>:IAppService where TEntiy : class
+    public interface IBasicEntityService<TEntiy> where TEntiy : class
     {
         // T GetByKey(object key);
         // List<T> GetList<T>();

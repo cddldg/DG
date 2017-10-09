@@ -1,4 +1,5 @@
-﻿using DG.Application.Member.Dtos;
+﻿using ACC.Application;
+using DG.Application.Member.Dtos;
 using DG.Core.Entities;
 using DG.EntityFramework;
 using System;
@@ -7,7 +8,7 @@ using System.Text;
 
 namespace DG.Application.Member
 {
-    public interface IMemberService
+    public interface IMemberService: IAppService
     {
         MemberOutput Add(AddMemberInput input);
         
