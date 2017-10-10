@@ -1,14 +1,13 @@
-﻿using System;
+﻿using ACC.Convert;
+using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Collections;
 using System.ComponentModel.DataAnnotations;
-using ACC.Convert;
+using System.Text;
 
-namespace DG.Core.Entities
+namespace ACC.Application
 {
     [Serializable]
-    public class BaseEntiy
+    public class BaseEntity
     {
         /// <summary>
         /// 主键编号

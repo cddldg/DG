@@ -22,12 +22,24 @@ namespace ACC.Common
             }
             return ret;
         }
-        public static List<Type> Find(Assembly assembly)
+        public static List<Type> FindService(Assembly assembly)
         {
             IEnumerable<Type> allTypes = assembly.GetTypes();
             allTypes = allTypes.Where(a =>
             {
                 var b = a.IsAbstract == false && a.IsClass && typeof(IAppService).IsAssignableFrom(a) && (a.GetConstructor(Type.EmptyTypes) != null|| a.GetConstructors().Any());
+                return b;
+            });
+
+            List<Type> ret = allTypes.ToList();
+            return ret;
+        }
+        public static List<Type> FindEntity(Assembly assembly)
+        {
+            IEnumerable<Type> allTypes = assembly.GetTypes();
+            allTypes = allTypes.Where(a =>
+            {
+                var b = a.FullName.EndsWith("Entity") && a.IsAbstract == false && a.IsClass && a.IsSubclassOf(typeof(BaseEntity))  && (a.GetConstructor(Type.EmptyTypes) != null || a.GetConstructors().Any());
                 return b;
             });
 

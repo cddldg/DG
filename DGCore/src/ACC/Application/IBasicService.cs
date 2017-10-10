@@ -9,45 +9,30 @@ namespace ACC.Application
     /// 实体基础操作业务服务
     /// </summary>
     /// <typeparam name="TEntiy">实体</typeparam>
-    public interface IBasicEntityService<TEntiy> where TEntiy : class
+    public interface IBasicEntityService: IAppService
     {
-        // T GetByKey(object key);
-        // List<T> GetList<T>();
-        // List<TEntity> GetList<TEntity>(Expression<Func<TEntity, bool>> predicate);
+        #region 增
+        TEntity Add<TEntity>(TEntity entity) where TEntity : BaseEntity;
+        TEntity AddDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity;
+        #endregion
+
+        #region 删
+        int Delete<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity;
+        int Delete<TEntity>(TEntity entity) where TEntity : BaseEntity;
+        int DeleteByKey<TEntity>(object key) where TEntity : BaseEntity;
+        int SoftDelete<TEntity>(object key) where TEntity : BaseEntity;
+        int SoftDelete<TEntity>(object key, object deleteUserId) where TEntity : BaseEntity;
+        #endregion
+
+        #region 改
+        int Update<TEntity>(TEntity entity) where TEntity : BaseEntity;
+        int UpdateDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity;
+        #endregion
         
-        // TEntity Add<TEntity>(TEntity entity);
-        // /// <summary>
-        // /// 传入一个 dto 对象，插入相应的数据
-        // /// </summary>
-        // /// <typeparam name="TEntity"></typeparam>
-        // /// <typeparam name="TDto"></typeparam>
-        // /// <param name="dto"></param>
-        // /// <returns></returns>
-        // TEntity AddFromDto<TEntity, TDto>(TDto dto) where TEntity : class;
-
-        //int Update<TEntity>(TEntity entity);
-        // /// <summary>
-        // /// 传入一个 dto 对象，更新相应的数据
-        // /// </summary>
-        // /// <typeparam name="TEntity"></typeparam>
-        // /// <typeparam name="TDto"></typeparam>
-        // /// <param name="dto"></param>
-        // /// <returns></returns>
-        // int UpdateFromDto<TEntity, TDto>(TDto dto);
-
-        TEntiy AddForDto<TInDto>(TInDto inDto);
-
-        //int Delete(Expression<Func<TEntiy, bool>> predicate);
-        long Delete(TEntiy entity);
-        long DeleteByKey(object key);
-        //int SoftDelete(object key);
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <typeparam name="TEntity"></typeparam>
-        /// <param name="key"></param>
-        /// <param name="deleteUserId">执行删除操作的用户Id</param>
-        /// <returns></returns>
-        //int SoftDelete(object key, object deleteUserId);
+        #region 查
+        TEntity GetByKey<TEntity>(object key) where TEntity : BaseEntity;
+        List<TEntity> GetList<TEntity>() where TEntity : BaseEntity;
+        List<TEntity> GetList<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity; 
+        #endregion
     }
 }

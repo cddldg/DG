@@ -1,4 +1,5 @@
 ﻿
+using ACC.Application;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -11,7 +12,7 @@ namespace DG.Core.Entities
     /// 菜单实体
     /// </summary>
     [Table("Menu")]
-    public class MenuEntity : BaseEntiy
+    public class MenuEntity : BaseEntity
     {
         /// <summary>
         /// 父ID

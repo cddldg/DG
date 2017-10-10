@@ -8,4 +8,8 @@
     <ProjectReference Include="..\ACC\ACC.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Entities\Base\" />
+  </ItemGroup>
+
 </Project>

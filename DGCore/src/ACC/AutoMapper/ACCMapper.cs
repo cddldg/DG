@@ -33,5 +33,11 @@ namespace ACC.AutoMapper
             Mapper.Initialize(p => p.CreateMap<TSource, TDestination>());
             return Mapper.Map<TDestination>(source);
         }
+        public static List<TDestination> MapTo<TSource, TDestination>(this List<TSource> source)
+        {
+            Mapper.Initialize(p => p.CreateMap<TSource, TDestination>());
+            return Mapper.Map<List<TDestination>>(source);
+        }
+
     }
 }

@@ -1,4 +1,8 @@
-﻿using ACC.Safety;
+﻿using ACC.Application;
+using ACC.AutoMapper;
+using ACC.Common;
+using ACC.Safety;
+using AutoMapper;
 using DG.Application;
 using DG.Application.Member;
 using DG.Application.Member.Dtos;
@@ -14,29 +18,38 @@ namespace DG.Controllers.Api
 {
     public class MemberController:BaseApiController
     {
-        private IMemberService _memberService;
-
-        public MemberController(IMemberService memberService) 
+        private IBasicEntityService _entityService;
+        public MemberController(IBasicEntityService basicEntityService) 
         {
-            _memberService = memberService;
-            
+            _entityService = basicEntityService;
         }
         
         
         [HttpPost]
         public MemberOutput Add(AddMemberInput input)
         {
+            #region 处理密码
+            var key = UserHelper.GenUserSecretkey();
+            var pwd = PasswordHelper.Encrypt(input.Password, key);
+            input.Password = pwd;
+            input.Secretkey = key;
+            #endregion
+            var entity = _entityService.AddDto<MemberEntity, AddMemberInput>(input);
+            var model = entity.MapTo<MemberEntity, MemberOutput>();
+            return model;
+        }
 
-            var p = _memberService.Add(input);
-            return p;
+        public List<MemberOutput> GetAll()
+        {
+            var entitys=_entityService.GetList<MemberEntity>();
+            var list =entitys.MapTo<MemberEntity, MemberOutput>();
+            return list;
         }
 
 
-        public long Del(long id)
+        public int Del(long id)
         {
-
-            var p = _memberService.DeleteByKey(id);
-            return p;
+            return _entityService.DeleteByKey<MemberEntity>(id);
         }
 
     }

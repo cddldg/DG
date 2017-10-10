@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ACC.Application;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,7 +11,7 @@ namespace DG.Core.Entities
     /// 会员实体
     /// </summary>
     [Table("Member")]
-    public class MemberEntity: BaseEntiy
+    public class MemberEntity: BaseEntity
     {
         public const int MaxNameLength = 256;
         public const int MaxDescriptionLength = 64 * 1024; //64KB

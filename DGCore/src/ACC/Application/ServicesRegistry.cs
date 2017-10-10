@@ -24,12 +24,12 @@ namespace ACC.Application
             List<Assembly> compileAssemblies = AssemblyHelper.LoadCompileAssemblies();
             foreach (var assembly in compileAssemblies)
             {
-                ret.AddRange(AssemblyHelper.Find(assembly));
+                ret.AddRange(AssemblyHelper.FindService(assembly));
             }
 
             return ret;
         }
-        static void AddServices(IServiceCollection services, List<Type> implementationTypes)
+        public static void AddServices(IServiceCollection services, List<Type> implementationTypes)
         {
             Type appServiceType = typeof(IAppService);
             foreach (Type implementationType in implementationTypes)

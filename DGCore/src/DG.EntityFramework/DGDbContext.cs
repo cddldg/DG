@@ -1,4 +1,5 @@
-﻿using DG.Core.Entities;
+﻿using ACC.Application;
+using DG.Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
@@ -22,9 +23,8 @@ namespace DG.EntityFramework
         {
             base.OnModelCreating(modelBuilder);
 
-            #region 需要创建的实体
-            modelBuilder.Entity<MenuEntity>();
-            modelBuilder.Entity<MemberEntity>();  
+            #region 需要创建的实体以及QueryFilter设置
+            modelBuilder.AddModelBuilder();
             #endregion
         }
         public override int SaveChanges()
@@ -62,7 +62,7 @@ namespace DG.EntityFramework
             return base.SaveChanges();
         }
 
-        
+
         //public DbSet<MenuEntity> Menu { get; set; }
         //public DbSet<MemberEntity> Member { get; set; }
     }
