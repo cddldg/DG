@@ -1,5 +1,31 @@
-﻿@{
+﻿@model DG.Web.Models.IndexVM
+@using ACC.Extensions
+@using ACC.Convert
+@{
     ViewData["Title"] = "Home Page";
 }
+<table class="gridtable">
+    <tr>
+        <th>间隔</th>
+        <th>ID</th>
+        <th>姓名</th>
+        <th>手机号码</th>
+        <th>创建时间</th>
+        <th>最后更新时间</th>
+        <th>是否删除</th>
+    </tr>
+    
+    @foreach (var item in Model.MemberOutput)
+    {
+        <tr>
+            <td>@item.CreateTime.Value.TimeIntervalCN()</td>
+            <td>@item.ID</td>
+            <td>@item.Name</td>
+            <td>@item.Mobile</td>
+            <td>@item.CreateTime.Value.ToyyyyMMddHHmmss()</td>
+            <td>@item.UpdateTime</td>
+            <td>@item.IsDeleted.TryBoolenToCN()</td>
+        </tr>
+    }
+</table>
 
-This Page For Core MySQL!

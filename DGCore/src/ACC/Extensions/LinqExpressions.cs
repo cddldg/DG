@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Linq.Dynamic.Core;
+using ACC.Exceptions;
 
-namespace ACC.Exceptions
+namespace ACC.Extensions
 {
     /// <summary>
     /// Linq lambda的扩展
@@ -59,7 +60,7 @@ namespace ACC.Exceptions
         {
             if (string.IsNullOrEmpty(orderBy))
             {
-                throw new InvalidDataExceptions("orderBy");
+                throw new ACCException("orderBy");
             }
             count = query.Count();
             return query.OrderBy(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize);
@@ -150,7 +151,7 @@ namespace ACC.Exceptions
         public static IQueryable<T> OrderBy<T>(this IQueryable<T> query, string ordering, params object[] values)
         {
             if (query == null)
-                throw new ArgumentNullException("query");
+                throw new ACCException("query");
             return DynamicQueryableExtensions.OrderBy(query, ordering, values);
         }
         #endregion

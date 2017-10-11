@@ -7,30 +7,44 @@ using DG.EntityFramework;
 using ACC.AutoMapper;
 using System.Linq;
 using ACC.Convert;
+using Microsoft.Extensions.Logging;
 
 namespace DG.Application
 {
     public class BasicEntityService : IBasicEntityService
     {
         #region Ctor
+        protected ILogger log;
         protected readonly DGDbContext _dbContext;
-        public BasicEntityService(DGDbContext db)
+        public BasicEntityService(DGDbContext db, ILoggerFactory loggerFactory)
         {
+            log = loggerFactory.CreateLogger<BasicEntityService>();
             _dbContext = db;
         } 
         #endregion
 
         #region 添加数据
 
-        public TEntity Add<TEntity>(TEntity entity) where TEntity : BaseEntity
+        public Result<TEntity> Add<TEntity>(TEntity entity) where TEntity : BaseEntity,new()
         {
-            var DbSet = _dbContext.Set<TEntity>();
-            var resultEntity = DbSet.Add(entity);
-            _dbContext.SaveChanges();
-            return resultEntity.Entity;
+            var result = new Result<TEntity>();
+            try
+            {
+                var DbSet = _dbContext.Set<TEntity>();
+                var resultEntity = DbSet.Add(entity);
+                _dbContext.SaveChanges();
+                result.Data = resultEntity.Entity;
+            }
+            catch (Exception ex)
+            {
+                result.IsError = YesNo.Yes;
+                log.LogError(ex.Message,ex);
+            }
+
+            return result;
         }
 
-        public TEntity AddDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity
+        public Result<TEntity> AddDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity, new()
         {
             var entity = dto.MapTo<TDto, TEntity>();
             return Add<TEntity>(entity);

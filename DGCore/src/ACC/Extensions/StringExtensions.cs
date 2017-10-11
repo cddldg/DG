@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ACC.String
+namespace ACC.Extensions
 {
     /// <summary>
     /// String扩展

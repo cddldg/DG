@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ACC.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -172,7 +173,7 @@ namespace ACC.Convert
         }
         #endregion
 
-        #region bit true/false
+        #region bit To bool
         /// <summary>
         /// 0 和 1返回 false 和 true
         /// 转换失败
@@ -187,7 +188,7 @@ namespace ACC.Convert
             }
             else
             {
-                throw new Exception("转换失败");
+                throw new ACCException("转换失败");
             }
         }
 
@@ -204,9 +205,23 @@ namespace ACC.Convert
             }
             else
             {
-                throw new Exception("转换失败");
+                throw new ACCException("转换失败");
             }
         }
         #endregion
+
+
+        public static string TryBoolenToCN(this bool obj)
+        {
+            try
+            {
+                return obj ? "是" : "否";
+            }
+            catch (Exception ex)
+            {
+                throw new ACCException("转换失败",ex);
+            }
+            
+        }
     }
 }

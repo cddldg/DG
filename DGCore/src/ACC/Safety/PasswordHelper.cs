@@ -1,4 +1,5 @@
-﻿using ACC.String;
+﻿using ACC.Exceptions;
+using ACC.String;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,7 +42,7 @@ namespace ACC.Safety
         public static void EnsurePasswordLegal(string pwdText)
         {
             if (pwdText == null || pwdText.Length < 6 || pwdText.Length > 15)
-                throw new Exception("密码必须是6-15位");
+                throw new ACCException("密码必须是6-15位");
         }
     }
 }

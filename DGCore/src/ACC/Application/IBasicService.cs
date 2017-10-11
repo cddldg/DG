@@ -12,8 +12,8 @@ namespace ACC.Application
     public interface IBasicEntityService: IAppService
     {
         #region 增
-        TEntity Add<TEntity>(TEntity entity) where TEntity : BaseEntity;
-        TEntity AddDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity;
+        Result<TEntity> Add<TEntity>(TEntity entity) where TEntity : BaseEntity,new();
+        Result<TEntity> AddDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity, new();
         #endregion
 
         #region 删

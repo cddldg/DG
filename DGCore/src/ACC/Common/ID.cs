@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ACC.Exceptions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -78,7 +79,7 @@ namespace ACC.Common
             {
                 if (machineId > maxMachineId)
                 {
-                    throw new Exception("机器码ID非法");
+                    throw new ACCException("机器码ID非法");
                 }
                 Snowflake.machineId = machineId;
             }
@@ -86,7 +87,7 @@ namespace ACC.Common
             {
                 if (datacenterId > maxDatacenterId)
                 {
-                    throw new Exception("数据中心ID非法");
+                    throw new ACCException("数据中心ID非法");
                 }
                 Snowflake.datacenterId = datacenterId;
             }
@@ -141,7 +142,7 @@ namespace ACC.Common
                 }
                 if (timestamp < lastTimestamp)
                 {
-                    throw new Exception("时间戳比上一次生成ID时时间戳还小，故异常");
+                    throw new ACCException("时间戳比上一次生成ID时时间戳还小，故异常");
                 }
                 Snowflake.lastTimestamp = timestamp; //把当前时间戳保存为最后生成ID的时间戳  
                 long Id = ((timestamp - twepoch) << (int)timestampLeftShift)

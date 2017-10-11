@@ -26,17 +26,18 @@ namespace DG.Controllers.Api
         
         
         [HttpPost]
-        public MemberOutput Add(AddMemberInput input)
+        public Result Add(AddMemberInput input)
         {
             #region 处理密码
             var key = UserHelper.GenUserSecretkey();
             var pwd = PasswordHelper.Encrypt(input.Password, key);
             input.Password = pwd;
             input.Secretkey = key;
+            input.Name = CNName.GetRandomName();
             #endregion
             var entity = _entityService.AddDto<MemberEntity, AddMemberInput>(input);
-            var model = entity.MapTo<MemberEntity, MemberOutput>();
-            return model;
+            var model = entity.Data.MapTo<MemberEntity, MemberOutput>();
+            return entity;
         }
 
         public List<MemberOutput> GetAll()

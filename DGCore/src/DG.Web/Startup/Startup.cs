@@ -28,7 +28,7 @@ namespace DG.Web
                      .SetBasePath(env.ContentRootPath)
                      .AddJsonFile(Path.Combine("Configs", "appsettings.json"), optional: true, reloadOnChange: true)  
                      .AddJsonFile(Path.Combine("Configs", $"appsettings.{env.EnvironmentName}.json"), optional: true, reloadOnChange: true)
-                     .AddJsonFile(Path.Combine("Configs", "bower.json"), optional: true, reloadOnChange: true)
+                     //.AddJsonFile(Path.Combine("Configs", "bundleconfig.json"), optional: true, reloadOnChange: true)
                      .AddEnvironmentVariables();                                              
             Configuration = builder.Build();
         }
