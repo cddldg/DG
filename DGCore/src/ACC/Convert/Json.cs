@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System.Collections.Generic;
 
 namespace ACC.Convert
@@ -9,13 +10,27 @@ namespace ACC.Convert
     public static class Json
     {
         /// <summary>
+        /// 格式处理
+        /// </summary>
+        public static readonly JsonSerializerSettings Settings = new JsonSerializerSettings
+        {
+            /*空值不输出*/
+            //NullValueHandling = NullValueHandling.Ignore,
+            /*驼峰输出*/
+            ContractResolver = new CamelCasePropertyNamesContractResolver(),
+            DateTimeZoneHandling = DateTimeZoneHandling.Utc,
+            /*时间格式处理*/
+            DateFormatHandling = DateFormatHandling.MicrosoftDateFormat,
+            DateFormatString = "yyyy-MM-dd HH:mm:ss"
+        };
+        /// <summary>
         /// 实体转json字符串
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
         public static string ToJson(this object obj)
         {
-            return JsonConvert.SerializeObject(obj, Formatting.Indented);
+            return JsonConvert.SerializeObject(obj, Settings);
         }
 
         /// <summary>
