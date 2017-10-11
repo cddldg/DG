@@ -19,7 +19,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DG.Web", "src\DG.Web\DG.Web
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DG.Controllers.Api", "src\DG.Controllers.Api\DG.Controllers.Api.csproj", "{5821262A-0B94-446F-9593-BA39F27FCBB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ACC", "src\ACC\ACC.csproj", "{06B7A1D8-6B36-4A6C-97EF-E79706C3B29E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ACC", "src\ACC\ACC.csproj", "{06B7A1D8-6B36-4A6C-97EF-E79706C3B29E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{BEDB92EF-A91B-43D6-A3AE-D974D200D70A}"
+	ProjectSection(SolutionItems) = preProject
+		..\README.md = ..\README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
