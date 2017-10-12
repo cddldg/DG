@@ -26,10 +26,10 @@ namespace DG.Web.Controllers
         }
         public IActionResult Index()
         {
-            var list=_entityService.GetList<MemberEntity>();
+            var list=_entityService.GetList<MemberEntity, MemberOutput>();
             IndexVM model = new IndexVM()
             {
-                MemberOutput = list.MapTo<MemberEntity, MemberOutput>()
+                MemberOutput = list.Data
             };
             return View(model);
         }

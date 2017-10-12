@@ -37,15 +37,13 @@ namespace ACC.Application
 
         private DateTime _serviceTime = DateTime.Now;
 
-        
-
         /// <summary>
         /// 系统时间
         /// </summary>
         public DateTime ServiceTime
         {
-            get { return _serviceTime; }
-            set { _serviceTime = value; }
+            get => _serviceTime;
+            set => _serviceTime = value;
         }
     }
 

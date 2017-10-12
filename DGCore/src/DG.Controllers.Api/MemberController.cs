@@ -34,24 +34,26 @@ namespace DG.Controllers.Api
             input.Password = pwd;
             input.Secretkey = key;
             input.Name = CNName.GetRandomName();
+            input.Mobile = CNMobile.GetRandomMobNO();
             #endregion
-            var entity = _entityService.AddDto<MemberEntity, AddMemberInput>(input);
-            var model = entity.Data.MapTo<MemberEntity, MemberOutput>();
-            return entity;
+            var model = _entityService.AddDto<MemberEntity, AddMemberInput>(input);
+            return model;
         }
 
-        public List<MemberOutput> GetAll()
+        public Result GetAll()
         {
-            var entitys=_entityService.GetList<MemberEntity>();
-            var list =entitys.MapTo<MemberEntity, MemberOutput>();
-            return list;
+            var model = _entityService.GetList<MemberEntity, MemberOutput>();
+            return model;
         }
 
 
-        public int Del(long id)
+        public Result Del(long id)
         {
             return _entityService.DeleteByKey<MemberEntity>(id);
         }
-
+        public Result SoftDel(long id)
+        {
+            return _entityService.SoftDelete<MemberEntity>(id);
+        }
     }
 }

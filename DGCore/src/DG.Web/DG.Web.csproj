@@ -31,6 +31,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\plugin\layui\font\iconfont.svg" />
+    <None Include="wwwroot\plugin\layui\layui.all.js" />
+    <None Include="wwwroot\plugin\layui\layui.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\carousel.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\code.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\element.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\flow.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\form.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\jquery.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\laydate.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\layedit.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\layer.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\laypage.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\laytpl.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\mobile.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\table.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\tree.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\upload.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\util.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DG.Application\DG.Application.csproj" />
     <ProjectReference Include="..\DG.Controllers.Api\DG.Controllers.Api.csproj" />
     <ProjectReference Include="..\DG.EntityFramework\DG.EntityFramework.csproj" />

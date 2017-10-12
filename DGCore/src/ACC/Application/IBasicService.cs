@@ -12,27 +12,27 @@ namespace ACC.Application
     public interface IBasicEntityService: IAppService
     {
         #region 增
-        Result<TEntity> Add<TEntity>(TEntity entity) where TEntity : BaseEntity,new();
-        Result<TEntity> AddDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity, new();
+        Result<TDto> Add<TEntity, TDto>(TEntity entity) where TEntity : BaseEntity,new() where TDto : new();
+        Result<TDto> AddDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity, new() where TDto : new();
         #endregion
 
         #region 删
-        int Delete<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity;
-        int Delete<TEntity>(TEntity entity) where TEntity : BaseEntity;
-        int DeleteByKey<TEntity>(object key) where TEntity : BaseEntity;
-        int SoftDelete<TEntity>(object key) where TEntity : BaseEntity;
-        int SoftDelete<TEntity>(object key, object deleteUserId) where TEntity : BaseEntity;
+        ResultBasic<int> Delete<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity;
+        ResultBasic<int> Delete<TEntity>(TEntity entity) where TEntity : BaseEntity;
+        ResultBasic<int> DeleteByKey<TEntity>(object key) where TEntity : BaseEntity,new();
+        ResultBasic<int> SoftDelete<TEntity>(object key) where TEntity : BaseEntity, new();
+        ResultBasic<int> SoftDelete<TEntity>(object key, object deleteUserId) where TEntity : BaseEntity, new();
         #endregion
 
         #region 改
-        int Update<TEntity>(TEntity entity) where TEntity : BaseEntity;
-        int UpdateDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity;
+        ResultBasic<int> Update<TEntity>(TEntity entity) where TEntity : BaseEntity;
+        ResultBasic<int> UpdateDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity;
         #endregion
-        
+
         #region 查
-        TEntity GetByKey<TEntity>(object key) where TEntity : BaseEntity;
-        List<TEntity> GetList<TEntity>() where TEntity : BaseEntity;
-        List<TEntity> GetList<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity; 
+        Result<TDto> GetByKey<TEntity, TDto>(object key) where TEntity : BaseEntity, new() where TDto:new();
+        Result<List<TDto>> GetList<TEntity, TDto>() where TEntity : BaseEntity, new();
+        Result<List<TDto>> GetList<TEntity, TDto>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity, new(); 
         #endregion
     }
 }

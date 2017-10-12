@@ -173,14 +173,39 @@ namespace ACC.Convert
         }
         #endregion
 
-        #region bit To bool
+        #region bool
+
+        public static string TryBoolenToCN(this bool obj)
+        {
+            try
+            {
+                return obj ? "是" : "否";
+            }
+            catch (Exception ex)
+            {
+                throw new ACCException("转换失败", ex);
+            }
+        }
+
+        public static bool TryBoolen(this object obj)
+        {
+            if (bool.TryParse(obj.ToString(), out bool ret))
+            {
+                return ret;
+            }
+            else
+            {
+                throw new ACCException("转换失败");
+            }
+        }
+
         /// <summary>
         /// 0 和 1返回 false 和 true
         /// 转换失败
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static bool TryBoolen(this object obj)
+        public static bool TryBitToBoolen(this object obj)
         {
             if (int.TryParse(obj.ToString(), out int ret))
             {
@@ -197,7 +222,7 @@ namespace ACC.Convert
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        public static int TryBit(this object obj)
+        public static int TryBoolenToBit(this object obj)
         {
             if (bool.TryParse(obj.ToString(), out bool ret))
             {
@@ -211,17 +236,6 @@ namespace ACC.Convert
         #endregion
 
 
-        public static string TryBoolenToCN(this bool obj)
-        {
-            try
-            {
-                return obj ? "是" : "否";
-            }
-            catch (Exception ex)
-            {
-                throw new ACCException("转换失败",ex);
-            }
-            
-        }
+        
     }
 }

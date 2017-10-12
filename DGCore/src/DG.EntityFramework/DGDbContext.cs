@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using ACC.Convert;
 
 namespace DG.EntityFramework
 {
@@ -48,12 +49,22 @@ namespace DG.EntityFramework
                 {
                     entry.Property("UpdateTime").CurrentValue = DateTime.Now;
                     userId = entry.Property("UpdateUserID").CurrentValue.ToString();
-                    name = "修改";
+                    var isModified = entry.Property("IsDeleted").IsModified;
+                    var now = entry.Property("IsDeleted").CurrentValue.TryBoolen();
+                    if (isModified&&now)
+                    {
+                        name = "软删";
+                    }
+                    else
+                    {
+                        name = "修改";
+                    }
+                    
                 }
                 if (entry.State == EntityState.Deleted)
                 {
                     userId = entry.Property("UpdateUserID").CurrentValue.ToString();
-                    name = "删除";
+                    name = "硬删";
                 } 
                 #endregion
 

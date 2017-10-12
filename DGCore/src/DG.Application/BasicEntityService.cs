@@ -1,13 +1,14 @@
 ﻿using ACC.Application;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq.Expressions;
 using DG.EntityFramework;
 using ACC.AutoMapper;
 using System.Linq;
 using ACC.Convert;
 using Microsoft.Extensions.Logging;
+using static DG.Core.Constant;
+using Microsoft.EntityFrameworkCore;
 
 namespace DG.Application
 {
@@ -25,105 +26,213 @@ namespace DG.Application
 
         #region 添加数据
 
-        public Result<TEntity> Add<TEntity>(TEntity entity) where TEntity : BaseEntity,new()
+        public Result<TDto> Add<TEntity, TDto>(TEntity entity) where TEntity : BaseEntity,new() where TDto : new()
         {
-            var result = new Result<TEntity>();
+            var result = new Result<TDto>();
             try
             {
                 var DbSet = _dbContext.Set<TEntity>();
                 var resultEntity = DbSet.Add(entity);
                 _dbContext.SaveChanges();
-                result.Data = resultEntity.Entity;
+                result.Data = resultEntity.Entity.MapTo<TEntity,TDto>();
             }
             catch (Exception ex)
             {
                 result.IsError = YesNo.Yes;
+                result.ErrorMessage = ex.Message;
+                result.ErrorCode = ErrorCode.Exception;
                 log.LogError(ex.Message,ex);
             }
-
             return result;
         }
 
-        public Result<TEntity> AddDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity, new()
+        public Result<TDto> AddDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity, new() where TDto : new()
         {
             var entity = dto.MapTo<TDto, TEntity>();
-            return Add<TEntity>(entity);
+            return Add<TEntity, TDto>(entity);
         }
 
         #endregion
 
         #region 查询数据
 
-        public TEntity GetByKey<TEntity>(object key) where TEntity : BaseEntity
+        public Result<TDto> GetByKey<TEntity, TDto>(object key) where TEntity : BaseEntity, new() where TDto : new()
         {
-            var DbSet = _dbContext.Set<TEntity>();
-            return DbSet.Find(key);
+            var result = new Result<TDto>();
+            try
+            {
+                var DbSet = _dbContext.Set<TEntity>();
+                var resultEntity = DbSet.Find(key);
+                result.Data = resultEntity.MapTo<TEntity, TDto>();
+            }
+            catch (Exception ex)
+            {
+                result.IsError = YesNo.Yes;
+                result.ErrorMessage = ex.Message;
+                result.ErrorCode = ErrorCode.Exception;
+                log.LogError(ex.Message, ex);
+            }
+            return result;
         }
 
-        public List<TEntity> GetList<TEntity>() where TEntity : BaseEntity
+        public Result<List<TDto>> GetList<TEntity, TDto>() where TEntity : BaseEntity, new() 
         {
-            var DbSet = _dbContext.Set<TEntity>();
-            return DbSet.ToList();
+            var result = new Result<List<TDto>>();
+            try
+            {
+                var DbSet = _dbContext.Set<TEntity>();
+                var resultEntity = DbSet.AsNoTracking().ToList();
+                result.Data = resultEntity.MapTo<TEntity, TDto>();
+            }
+            catch (Exception ex)
+            {
+                result.IsError = YesNo.Yes;
+                result.ErrorMessage = ex.Message;
+                result.ErrorCode = ErrorCode.Exception;
+                log.LogError(ex.Message, ex);
+            }
+            return result;
         }
 
-        public List<TEntity> GetList<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity
+        public Result<List<TDto>> GetList<TEntity, TDto>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity, new()
         {
-            var DbSet = _dbContext.Set<TEntity>();
-            return DbSet.Where(predicate).ToList();
+            var result = new Result<List<TDto>>();
+            try
+            {
+                var DbSet = _dbContext.Set<TEntity>();
+                var resultEntity = DbSet.Where(predicate).AsNoTracking().ToList();
+                result.Data = resultEntity.MapTo<TEntity, TDto>(); ;
+            }
+            catch (Exception ex)
+            {
+                result.IsError = YesNo.Yes;
+                result.ErrorMessage = ex.Message;
+                result.ErrorCode = ErrorCode.Exception;
+                log.LogError(ex.Message, ex);
+            }
+            return result;
         } 
 
         #endregion
         
         #region 删除数据
 
-        public int Delete<TEntity>(TEntity entity) where TEntity : BaseEntity
+        public ResultBasic<int> Delete<TEntity>(TEntity entity) where TEntity : BaseEntity
         {
-            var DbSet = _dbContext.Set<TEntity>();
-            DbSet.Remove(entity);
-            return _dbContext.SaveChanges();
-        }
-        public int Delete<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity
-        {
-            var DbSet = _dbContext.Set<TEntity>();
-            var entitys = DbSet.Where(predicate);
-            var count = 0;
-            foreach (var entity in entitys)
+            var result = new ResultBasic<int>();
+            try
             {
-                count += Delete<TEntity>(entity);
+                var DbSet = _dbContext.Set<TEntity>();
+                DbSet.Remove(entity);
+                result.Data = _dbContext.SaveChanges();  
             }
-            return count;
+            catch (Exception ex)
+            {
+                result.IsError = YesNo.Yes;
+                result.ErrorMessage = ex.Message;
+                result.ErrorCode = ErrorCode.Exception;
+                log.LogError(ex.Message, ex);
+            }
+            return result;
         }
-        public int DeleteByKey<TEntity>(object key) where TEntity : BaseEntity
+        public ResultBasic<int> Delete<TEntity>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity
         {
-            TEntity entity = null;
-            entity.ID = key.Trylong();
-            return Delete<TEntity>(entity);
+            var result = new ResultBasic<int>();
+            try
+            {
+                var DbSet = _dbContext.Set<TEntity>();
+                var entitys = DbSet.Where(predicate);
+                var count = 0;
+                foreach (var entity in entitys)
+                {
+                    count += Delete(entity).Data;
+                }
+                result.Data = count;
+            }
+            catch (Exception ex)
+            {
+                result.IsError = YesNo.Yes;
+                result.ErrorMessage = ex.Message;
+                result.ErrorCode = ErrorCode.Exception;
+                log.LogError(ex.Message, ex);
+            }
+            return result;
         }
-        public int SoftDelete<TEntity>(object key) where TEntity : BaseEntity
+        public ResultBasic<int> DeleteByKey<TEntity>(object key) where TEntity : BaseEntity,new()
         {
-
-            return 0;
+            TEntity entity = new TEntity
+            {
+                ID = key.Trylong()
+            };
+            return Delete(entity);
         }
-        public int SoftDelete<TEntity>(object key, object deleteUserId) where TEntity : BaseEntity
+        public ResultBasic<int> SoftDelete<TEntity>(object key) where TEntity : BaseEntity,new()
         {
-            return 0;
+            var result = new ResultBasic<int>();
+            try
+            {
+                var DbSet = _dbContext.Set<TEntity>();
+                var entityRe = DbSet.Find(key);
+                entityRe.IsDeleted = true;
+                return Update(entityRe);
+            }
+            catch (Exception ex)
+            {
+                result.IsError = YesNo.Yes;
+                result.ErrorMessage = ex.Message;
+                result.ErrorCode = ErrorCode.Exception;
+                log.LogError(ex.Message, ex);
+            }
+            return result;
+        }
+        public ResultBasic<int> SoftDelete<TEntity>(object key, object deleteUserId) where TEntity : BaseEntity, new()
+        {
+            var result = new ResultBasic<int>();
+            try
+            {
+                var DbSet = _dbContext.Set<TEntity>();
+                var entityRe = DbSet.Find(key);
+                entityRe.IsDeleted = true;
+                entityRe.UpdateUserID = deleteUserId.Trylong();
+                return Update(entityRe);
+            }
+            catch (Exception ex)
+            {
+                result.IsError = YesNo.Yes;
+                result.ErrorMessage = ex.Message;
+                result.ErrorCode = ErrorCode.Exception;
+                log.LogError(ex.Message, ex);
+            }
+            return result;
         } 
 
         #endregion
 
         #region 修改数据
 
-        public int Update<TEntity>(TEntity entity) where TEntity : BaseEntity
+        public ResultBasic<int> Update<TEntity>(TEntity entity) where TEntity : BaseEntity
         {
-            var DbSet = _dbContext.Set<TEntity>();
-            DbSet.Update(entity);
-            return _dbContext.SaveChanges();
+            var result = new ResultBasic<int>();
+            try
+            {
+                var DbSet = _dbContext.Set<TEntity>();
+                var entitys = DbSet.Update(entity);
+                result.Data = _dbContext.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                result.IsError = YesNo.Yes;
+                result.ErrorMessage = ex.Message;
+                result.ErrorCode = ErrorCode.Exception;
+                log.LogError(ex.Message, ex);
+            }
+            return result;
         }
 
-        public int UpdateDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity
+        public ResultBasic<int> UpdateDto<TEntity, TDto>(TDto dto) where TEntity : BaseEntity
         {
             var entity = dto.MapTo<TDto, TEntity>();
-            return Update<TEntity>(entity);
+            return Update(entity);
         }
 
         #endregion
