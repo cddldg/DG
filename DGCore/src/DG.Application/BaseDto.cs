@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using ACC.Convert;
 
+
 namespace DG.Application
 {
     public class BaseDto

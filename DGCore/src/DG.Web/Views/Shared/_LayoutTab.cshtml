@@ -1,0 +1,29 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>@ViewData["Title"] - dldg.ink</title>
+    <link href="~/plugin/layui/css/layui.css" rel="stylesheet" />
+    @*<environment include="Development">
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Staging,Production">
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>*@
+</head>
+<body>
+    <!-- 内容主体区域 -->
+    <div style="padding: 1px;">
+        @RenderBody()
+    </div>
+    <script src="~/plugin/layui/layui.js"></script>
+    @*<environment exclude="Development">
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Staging,Production">
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>*@
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

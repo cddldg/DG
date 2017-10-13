@@ -37,6 +37,9 @@ namespace ACC.Application
 
         private DateTime _serviceTime = DateTime.Now;
 
+        public YesNo Code { get => _isError; set => _isError = value; }
+        public string Msg { get => ErrorMessage; set => ErrorMessage = value; }
+        public int Count { get; set; }
         /// <summary>
         /// 系统时间
         /// </summary>
@@ -45,6 +48,7 @@ namespace ACC.Application
             get => _serviceTime;
             set => _serviceTime = value;
         }
+        
     }
 
     /// <summary>

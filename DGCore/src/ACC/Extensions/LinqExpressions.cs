@@ -60,7 +60,7 @@ namespace ACC.Extensions
         {
             if (string.IsNullOrEmpty(orderBy))
             {
-                throw new ACCException("orderBy");
+                throw new ACCException("参数'orderBy'不能为空.");
             }
             count = query.Count();
             return query.OrderBy(orderBy).Skip((pageIndex - 1) * pageSize).Take(pageSize);

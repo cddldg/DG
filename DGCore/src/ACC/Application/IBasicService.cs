@@ -32,7 +32,8 @@ namespace ACC.Application
         #region 查
         Result<TDto> GetByKey<TEntity, TDto>(object key) where TEntity : BaseEntity, new() where TDto:new();
         Result<List<TDto>> GetList<TEntity, TDto>() where TEntity : BaseEntity, new();
-        Result<List<TDto>> GetList<TEntity, TDto>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity, new(); 
+        Result<List<TDto>> GetList<TEntity, TDto>(Expression<Func<TEntity, bool>> predicate) where TEntity : BaseEntity, new();
+        Result<List<TDto>> GetPager<TEntity, TDto>(int pageIndex,int pageSize,string orderby) where TEntity : BaseEntity, new();
         #endregion
     }
 }

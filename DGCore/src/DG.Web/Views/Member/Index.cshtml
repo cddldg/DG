@@ -1,0 +1,97 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutTab.cshtml";
+     ViewData["Title"] = "Index";
+}
+
+<table id="mytable" class="layui-table" lay-filter="myfilter"></table>
+<script type="text/html" id="mybar">
+    @*<a class="layui-btn layui-btn-primary layui-btn-mini" lay-event="detail">查看</a>
+        <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>*@
+    <div class="layui-btn-group">
+        <button class="layui-btn layui-btn-small" lay-event="detail">
+            <i class="layui-icon">&#xe60a;</i>
+        </button>
+        <button class="layui-btn layui-btn-small" lay-event="detail">
+            <i class="layui-icon">&#xe642;</i>
+        </button>
+        <button class="layui-btn layui-btn-small layui-btn-danger" lay-event="del">
+            <i class="layui-icon">&#xe640;</i>
+        </button>
+    </div>
+</script>
+@section Scripts{
+
+    <script>
+    layui.use([ 'layer', 'table', 'element'],function () {
+        var layer = layui.layer //弹层
+        var table = layui.table //表格
+        var element = layui.element; //元素操作
+
+        /*执行渲染*/
+        table.render({
+            elem: '#mytable',
+            url: '/api/member/GetPager',
+            request: {
+                pageName: 'pageIndex' //页码的参数名称，默认：page
+                , limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            },
+            height: 'full-170',
+            even: true,
+            initSort: {
+                field: 'name' //排序字段，对应 cols 设定的各字段名
+                , type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
+            },
+            page: true,
+            loading: true,
+            limits: [10, 20, 50, 100, 300],
+            limit: 10,
+            id:'datatable',
+            cols: [[
+                { checkbox: true },
+                { field: 'id', title: 'ID', width: 200 },
+                { field: 'name', title: '用户名', width: 100, sort: true },
+                { field: 'mobile', title: '手机号码', width: 120 },
+                { field: 'createTime', title: '创建时间', width: 200 },
+                { field: 'updateTime', title: '最后更新时间', width: 200 },
+                { field: 'isDeleted', title: '是否删除', width: 100 },
+                { fixed:'right',title: '操作', width: 160, align: 'center', toolbar: '#mybar' } //这里的toolbar值是模板元素的选择器
+            ]]
+        });
+        /*监听复选框*/
+        table.on('checkbox(myfilter)', function (obj) {
+            var checkStatus = table.checkStatus('datatable'); //test即为基础参数id对应的值
+            layer.msg(obj.data.id);
+        });
+        /*监听工具条*/
+        table.on('tool(myfilter)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                , layEvent = obj.event; //获得 lay-event 对应的值
+            if (layEvent === 'detail') {
+                layer.msg('查看操作:' + data.name);
+            } else if (layEvent === 'del') {
+                layer.confirm('真的删除行么:' + data.name, function (index) {
+                    obj.del(); //删除对应行（tr）的DOM结构
+                    layer.close(index);
+                    //向服务端发送删除指令
+                });
+            } else if (layEvent === 'edit') {
+                layer.msg('编辑操作:' + data.name);
+            }
+        });
+        /*监听排序*/
+        table.on('sort(myfilter)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            console.log(obj.type);
+            if (!obj.type) { obj.type = "desc"; }
+
+            table.reload('datatable', {
+                initSort: obj //记录初始排序，如果不设的话，将无法标记表头的排序状态。
+                , where: { //请求参数
+                    orderby: obj.field + " " + obj.type  //排序字段
+                }
+            });
+        });
+    });
+    </script>
+}
+

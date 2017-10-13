@@ -9,7 +9,7 @@ using ACC.Convert;
 using Microsoft.Extensions.Logging;
 using static DG.Core.Constant;
 using Microsoft.EntityFrameworkCore;
-
+using ACC.Extensions;
 namespace DG.Application
 {
     public class BasicEntityService : IBasicEntityService
@@ -83,6 +83,7 @@ namespace DG.Application
                 var DbSet = _dbContext.Set<TEntity>();
                 var resultEntity = DbSet.AsNoTracking().ToList();
                 result.Data = resultEntity.MapTo<TEntity, TDto>();
+                result.Count = result.Data.Count;
             }
             catch (Exception ex)
             {
@@ -101,7 +102,8 @@ namespace DG.Application
             {
                 var DbSet = _dbContext.Set<TEntity>();
                 var resultEntity = DbSet.Where(predicate).AsNoTracking().ToList();
-                result.Data = resultEntity.MapTo<TEntity, TDto>(); ;
+                result.Data = resultEntity.MapTo<TEntity, TDto>();
+                result.Count = result.Data.Count;
             }
             catch (Exception ex)
             {
@@ -111,10 +113,28 @@ namespace DG.Application
                 log.LogError(ex.Message, ex);
             }
             return result;
-        } 
-
+        }
+        public Result<List<TDto>> GetPager<TEntity, TDto>(int pageIndex, int pageSize, string orderby) where TEntity : BaseEntity, new()
+        {
+            var result = new Result<List<TDto>>();
+            try
+            {
+                var DbSet = _dbContext.Set<TEntity>();
+                var resultEntity = DbSet.AsNoTracking().PageBy(out int count,pageIndex,pageSize, orderby).ToList();
+                result.Data = resultEntity.MapTo<TEntity, TDto>();
+                result.Count = count;
+            }
+            catch (Exception ex)
+            {
+                result.IsError = YesNo.Yes;
+                result.ErrorMessage = ex.Message;
+                result.ErrorCode = ErrorCode.Exception;
+                log.LogError(ex.Message, ex);
+            }
+            return result;
+        }
         #endregion
-        
+
         #region 删除数据
 
         public ResultBasic<int> Delete<TEntity>(TEntity entity) where TEntity : BaseEntity
@@ -247,7 +267,7 @@ namespace DG.Application
             {
                 _dbContext.Dispose();
             }
-        } 
+        }
         #endregion
     }
 }

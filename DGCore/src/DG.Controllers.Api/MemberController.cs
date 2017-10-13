@@ -45,7 +45,11 @@ namespace DG.Controllers.Api
             var model = _entityService.GetList<MemberEntity, MemberOutput>();
             return model;
         }
-
+        public Result GetPager(int pageIndex = 1, int pageSize = 10, string orderby="id desc,name asc")
+        {
+            var model = _entityService.GetPager<MemberEntity, MemberOutput>(pageIndex, pageSize, orderby);
+            return model;
+        }
 
         public Result Del(long id)
         {

@@ -34,7 +34,7 @@
             <ul class="layui-nav layui-layout-right">
                 <li class="layui-nav-item">
                     <a href="javascript:;">
-                        <img src="http://www.qqzhi.com/uploadpic/2014-09-18/195440820.jpg" class="layui-nav-img">
+                        <img src="http://test.file.pisen.com.cn:9212/QJW3C1000/Product/201710/08314104627348.png" class="layui-nav-img layui-anim-rotate layui-anim-loop">
                         dldg
                     </a>
                     <dl class="layui-nav-child">
@@ -49,14 +49,12 @@
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <ul class="layui-nav layui-nav-tree" lay-filter="mynav">
                     <li class="layui-nav-item layui-nav-itemed">
                         <a class="" href="javascript:;">所有商品</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">列表一</a></dd>
-                            <dd><a href="javascript:;">列表二</a></dd>
-                            <dd><a href="javascript:;">列表三</a></dd>
-                            <dd><a href="">超链接</a></dd>
+                            <dd data-id="1" data-type="tabAdd"><a href="javascript:;" >Member</a></dd>
+                            <dd data-id="2" data-type="tabAdd"><a href="javascript:;" >Menu</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -75,7 +73,13 @@
 
         <div class="layui-body">
             <!-- 内容主体区域 -->
-            <div style="padding: 15px;">
+            <div class="layui-tab" lay-filter="mytab" lay-allowclose="true">
+                <ul class="layui-tab-title"></ul>
+                <div class="layui-tab-content">
+
+                </div>
+            </div>
+            <div style="padding: 1px;">
                 @RenderBody()
             </div>
         </div>
@@ -92,10 +96,33 @@
     <environment exclude="Staging,Production">
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>*@
+
     <script>
-        //JavaScript代码区域
         layui.use('element', function () {
-            var element = layui.element;
+            var $ = layui.jquery
+                , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+            //触发事件
+            var active = {
+                tabAdd: function (tabid, name) {
+                    console.log(tabid,name);
+                    element.tabAdd('mytab', {
+                        title: name,
+                        content: '内容' + (Math.random() * 1000 | 0),
+                        id: tabid 
+                    });
+                } 
+            };
+
+            element.on('nav(mynav)', function (elem) {
+                var name = $(elem).find('a').text();
+                var id = $(elem).data('id');
+                var type = $(elem).data('type');
+                console.log(name, id, type);
+                active[type] ? active[type].call($(elem),id, name) : '';
+            });
+
+            
 
         });
     </script>
