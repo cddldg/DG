@@ -5,12 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="App_Data\**" />
     <Compile Remove="Logs\**" />
     <Compile Remove="weblog\**" />
+    <Content Remove="App_Data\**" />
     <Content Remove="Logs\**" />
     <Content Remove="weblog\**" />
+    <EmbeddedResource Remove="App_Data\**" />
     <EmbeddedResource Remove="Logs\**" />
     <EmbeddedResource Remove="weblog\**" />
+    <None Remove="App_Data\**" />
     <None Remove="Logs\**" />
     <None Remove="weblog\**" />
   </ItemGroup>
@@ -28,7 +32,6 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\images\" />
-    <Folder Include="App_Data\" />
   </ItemGroup>
 
   <ItemGroup>

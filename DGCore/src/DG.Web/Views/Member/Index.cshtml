@@ -1,13 +1,10 @@
 ﻿@{
-    Layout = "~/Views/Shared/_LayoutTab.cshtml";
-     ViewData["Title"] = "Index";
+    Layout =null;
+    ViewData["Title"] = "Index";
 }
 
 <table id="mytable" class="layui-table" lay-filter="myfilter"></table>
 <script type="text/html" id="mybar">
-    @*<a class="layui-btn layui-btn-primary layui-btn-mini" lay-event="detail">查看</a>
-        <a class="layui-btn layui-btn-mini" lay-event="edit">编辑</a>
-        <a class="layui-btn layui-btn-danger layui-btn-mini" lay-event="del">删除</a>*@
     <div class="layui-btn-group">
         <button class="layui-btn layui-btn-small" lay-event="detail">
             <i class="layui-icon">&#xe60a;</i>
@@ -20,10 +17,8 @@
         </button>
     </div>
 </script>
-@section Scripts{
-
-    <script>
-    layui.use([ 'layer', 'table', 'element'],function () {
+<script>
+    layui.use(['layer', 'table', 'element'], function () {
         var layer = layui.layer //弹层
         var table = layui.table //表格
         var element = layui.element; //元素操作
@@ -46,7 +41,7 @@
             loading: true,
             limits: [10, 20, 50, 100, 300],
             limit: 10,
-            id:'datatable',
+            id: 'datatable',
             cols: [[
                 { checkbox: true },
                 { field: 'id', title: 'ID', width: 200 },
@@ -55,7 +50,7 @@
                 { field: 'createTime', title: '创建时间', width: 200 },
                 { field: 'updateTime', title: '最后更新时间', width: 200 },
                 { field: 'isDeleted', title: '是否删除', width: 100 },
-                { fixed:'right',title: '操作', width: 160, align: 'center', toolbar: '#mybar' } //这里的toolbar值是模板元素的选择器
+                { fixed: 'right', title: '操作', width: 160, align: 'center', toolbar: '#mybar' } //这里的toolbar值是模板元素的选择器
             ]]
         });
         /*监听复选框*/
@@ -92,6 +87,6 @@
             });
         });
     });
-    </script>
-}
+</script>
+
 

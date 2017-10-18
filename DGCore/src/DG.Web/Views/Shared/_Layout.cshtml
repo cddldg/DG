@@ -53,8 +53,8 @@
                     <li class="layui-nav-item layui-nav-itemed">
                         <a class="" href="javascript:;">所有商品</a>
                         <dl class="layui-nav-child">
-                            <dd data-id="1" data-type="tabAdd"><a href="javascript:;" >Member</a></dd>
-                            <dd data-id="2" data-type="tabAdd"><a href="javascript:;" >Menu</a></dd>
+                            <dd data-id="1" data-url="/Member/index" data-type="tabAdd"><a href="javascript:;" >Member</a></dd>
+                            <dd data-id="2" data-url="/Member/Create" data-type="tabAdd"><a href="javascript:;" >Menu</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -104,8 +104,8 @@
 
             //触发事件
             var active = {
-                tabAdd: function (tabid, name) {
-                    $.get('/Member/index', function (data) {
+                tabAdd: function (tabid, name,url) {
+                    $.get(url, function (data) {
                         element.tabAdd('mytab', {
                             title: name,
                             content: data,
@@ -120,8 +120,8 @@
                 var name = $(elem).find('a').text();
                 var id = $(elem).data('id');
                 var type = $(elem).data('type');
-                //console.log(name, id, type);
-                active[type] ? active[type].call($(elem),id, name) : '';
+                var url = $(elem).data('url');
+                active[type] ? active[type].call($(elem), id, name, url) : '';
             });
 
             
