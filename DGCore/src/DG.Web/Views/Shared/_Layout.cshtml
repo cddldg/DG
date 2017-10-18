@@ -105,12 +105,14 @@
             //触发事件
             var active = {
                 tabAdd: function (tabid, name) {
-                    console.log(tabid,name);
-                    element.tabAdd('mytab', {
-                        title: name,
-                        content: '内容' + (Math.random() * 1000 | 0),
-                        id: tabid 
+                    $.get('/Member/index', function (data) {
+                        element.tabAdd('mytab', {
+                            title: name,
+                            content: data,
+                            id: tabid
+                        });
                     });
+                    
                 } 
             };
 
@@ -118,7 +120,7 @@
                 var name = $(elem).find('a').text();
                 var id = $(elem).data('id');
                 var type = $(elem).data('type');
-                console.log(name, id, type);
+                //console.log(name, id, type);
                 active[type] ? active[type].call($(elem),id, name) : '';
             });
 
