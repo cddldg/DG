@@ -15,5 +15,16 @@
       "renameLocals": true
     },
     "sourceMap": false
+  },
+  {
+    "inputFiles": [
+      "wwwroot/js/layout.js"
+    ],
+    "outputFileName": "wwwroot/js/layout.min.js",
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
   }
 ]
