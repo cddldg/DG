@@ -17,6 +17,10 @@ using NLog.Web;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.IO;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using ACC.Common;
 
 namespace DG.Web
 {
@@ -40,6 +44,8 @@ namespace DG.Web
         {
             /***********HttpContext相关设置（没搞懂现在不需要任何注入也TM有了。。。）************/
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            #region MyRegion
             /* MemoryCache */
             //services.AddMemoryCache();
             /* Session */
@@ -53,12 +59,51 @@ namespace DG.Web
             //services.AddMvc(options =>
             //{
             //    options.Filters.Add(typeof(HttpGlobalExceptionFilter));
-            //}).AddControllersAsServices();
+            //}).AddControllersAsServices(); 
+            #endregion
+
+            
+            services.AddDbContext<DGDbContext>(options => options.UseMySql(Configuration.GetConnectionString("MySQL")));
+
+            /* 注册服务 */
+            services.AddServices();
+            //var audienceConfig = Configuration.GetSection("Audience");
+            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            //        .AddJwtBearer(options =>
+            //        {
+            //            options.TokenValidationParameters = new TokenValidationParameters
+            //            {
+            //                ValidateIssuer = true,
+            //                ValidateAudience = true,
+            //                ValidateLifetime = true,
+            //                ValidateIssuerSigningKey = true,
+
+            //                ValidIssuer = audienceConfig["Issuer"],
+            //                ValidAudience = audienceConfig["Audience"],
+            //                IssuerSigningKey = BearerHelper.Create(audienceConfig["Secret"])
+            //            };
+
+            //            options.Events = new JwtBearerEvents
+            //            {
+            //                OnAuthenticationFailed = context =>
+            //                {
+            //                    Console.WriteLine("OnAuthenticationFailed: " + context.Exception.Message);
+            //                    return Task.CompletedTask;
+            //                },
+            //                OnTokenValidated = context =>
+            //                {
+            //                    Console.WriteLine("OnTokenValidated: " + context.SecurityToken);
+            //                    return Task.CompletedTask;
+            //                }
+            //            };
+            //        });
+
+            //services.AddAuthorization(options =>
+            //{
+            //    options.AddPolicy("Member",policy => policy.RequireClaim("MembershipId"));
+            //});
 
             services.AddMvc();
-            services.AddDbContext<DGDbContext>(options => options.UseMySql(Configuration.GetConnectionString("MySQL")));
-            /* 注册服务 */
-            services.AddServices(); 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -70,6 +115,22 @@ namespace DG.Web
             app.AddNLogWeb();
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
+
+            #region JWT
+            //var audienceConfig = Configuration.GetSection("Audience");
+            //var symmetricKeyAsBase64 = audienceConfig["Secret"];
+            //var keyByteArray = Encoding.ASCII.GetBytes(symmetricKeyAsBase64);
+            //var signingKey = new SymmetricSecurityKey(keyByteArray);
+            //var SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+            //app.UseAuthentication(new TokenProviderOptions
+            //{
+            //    Audience = audienceConfig["Audience"],
+            //    Issuer = audienceConfig["Issuer"],
+            //    SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
+            //}); 
+            app.UseAuthentication();
+            #endregion
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

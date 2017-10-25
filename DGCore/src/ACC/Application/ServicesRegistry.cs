@@ -1,5 +1,10 @@
 ﻿using ACC.Common;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +18,11 @@ namespace ACC.Application
     /// </summary>
     public static class ServicesRegistry
     {
+        #region AddServices
+        /// <summary>
+        /// 注册服务
+        /// </summary>
+        /// <param name="services"></param>
         public static void AddServices(this IServiceCollection services)
         {
             List<Type> implementationTypes = FindFromCompileLibraries();
@@ -45,5 +55,6 @@ namespace ACC.Application
                 }
             }
         }
+        #endregion
     }
 }

@@ -14,12 +14,17 @@ namespace ACC.Common
             return secretkey;
         }
 
-        static string CreateNo()
+        public static string CreateNo()
         {
             Random random = new Random();
             string strRandom = random.Next(1000, 10000).ToString(); //生成编号 
             string code = DateTime.Now.ToString("yyyyMMddHHmmss") + strRandom;
             return code;
+        }
+
+        public static bool ExitUser(string username, string password)
+        {
+            return (username == "admin" && password == "111111");
         }
     }
 }

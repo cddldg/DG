@@ -49,15 +49,15 @@
         <div class="layui-side layui-bg-black">
             <div class="layui-side-scroll">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree" lay-filter="mynav">
+                <ul class="layui-nav layui-nav-tree" lay-filter="leftnav">
                     <li class="layui-nav-item layui-this">
                         <a href="javascript:;"><i class="layui-icon">&#xe68e;</i>首页</a>
                     </li>
                     <li class="layui-nav-item layui-nav-itemed">
                         <a class="" href="javascript:;">所有商品</a>
                         <dl class="layui-nav-child">
-                            <dd data-id="1" data-url="/Member/index" data-type="tabAdd"><a href="javascript:;"><i class="layui-icon">&#xe612;</i>Member</a></dd>
-                            <dd data-id="2" data-url="/Member/Create" data-type="tabAdd"><a href="javascript:;"><i class="layui-icon">&#xe65f;</i>Menu</a></dd>
+                            <dd data-type="tabAdd" data-id="1" data-url="/Member/Index" ><a href="javascript:;"><i class="layui-icon">&#xe612;</i>Member</a></dd>
+                            <dd data-type="tabAdd" data-id="2" data-url="/Home/Error" ><a href="javascript:;"><i class="layui-icon">&#xe65f;</i>Menu</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -84,12 +84,12 @@
                     <div class="layui-tab-item layui-show">
                         <div class="layui-carousel" id="test10">
                             <div carousel-item="">
-                                <div><img src="//res.layui.com/images/layui/demo/1.png"></div>
-                                <div><img src="//res.layui.com/images/layui/demo/2.png"></div>
-                                <div><img src="//res.layui.com/images/layui/demo/3.png"></div>
-                                <div><img src="//res.layui.com/images/layui/demo/4.png"></div>
-                                <div><img src="//res.layui.com/images/layui/demo/5.png"></div>
-                                <div><img src="//res.layui.com/images/layui/demo/6.png"></div>
+                                <div>//res.layui.com/images/layui/demo/1.png"</div>
+                                <div>//res.layui.com/images/layui/demo/2.png"</div>
+                                <div>//res.layui.com/images/layui/demo/3.png"</div>
+                                <div>//res.layui.com/images/layui/demo/4.png"</div>
+                                <div>//res.layui.com/images/layui/demo/5.png"</div>
+                                <div>//res.layui.com/images/layui/demo/6.png"</div>
                             </div>
                         </div>
                     </div>
@@ -113,7 +113,7 @@
             <script src="~/js/layout.min.js" asp-append-version="true"></script>
         </environment>*@
     <script>
-        
+
         /*******************
         * layout js
         * @@param
@@ -123,21 +123,21 @@
         var layout = {
             init: function () {
                 layui.use(['element', 'layer', 'carousel'], function () {
-                    var $ = layui.jquery
-                        , element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+                    var $ = layui.jquery;
+                    var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
 
-                    var layer = layui.layer //弹层
+                    var layer = layui.layer; //弹层
                     var carousel = layui.carousel;
 
-                    layer.config({
-                        skin: 'demo-class'
-                    });
+                    //layer.config({
+                    //    skin: 'demo-class'
+                    //});
 
                     //图片轮播
                     carousel.render({
                         elem: '#test10',
                         width: '778px',
-                        height:'440px',
+                        height: '440px',
                         interval: 3000
                     });
                     //触发事件
@@ -145,10 +145,11 @@
                         tabAdd: function (tabid, name, url) {
                             var tabTitleDiv = $('.layui-tab[lay-filter=mytab]').children('.layui-tab-title');
                             var exist = tabTitleDiv.find('li[lay-id=' + tabid + ']');
+                            console.log(exist);
                             if (exist.length > 0) {
                                 element.tabChange('mytab', tabid);
                             } else {
-
+                                var index = layer.load();
                                 $.get(url, function (data) {
                                     element.tabAdd('mytab', {
                                         title: name,
@@ -156,12 +157,13 @@
                                         id: tabid
                                     });
                                     element.tabChange('mytab', tabid);
+                                    layer.close(index);
                                 });
                             }
                         }
                     };
                     //监听菜单
-                    element.on('nav(mynav)', function (elem) {
+                    element.on('nav(leftnav)', function (elem) {
                         var type = $(elem).data('type');
                         var id = $(elem).data('id');
                         var name = $(elem).find('a').html();
