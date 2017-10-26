@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DG.Web.Controllers
 {
@@ -68,9 +69,10 @@ namespace DG.Web.Controllers
         }
 
         // GET: Member/Delete/5
+        [Authorize]
         public ActionResult Delete(int id)
         {
-            return View();
+            return View(Ok("jiushiokle"));
         }
 
         // POST: Member/Delete/5

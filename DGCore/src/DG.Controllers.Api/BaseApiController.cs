@@ -11,7 +11,7 @@ namespace DG.Controllers.Api
 {
     [Produces("application/json")]
     [Area("api")]
-    //[Authorize]
+    [Authorize]
     public abstract class BaseApiController: BaseController
     {
     }

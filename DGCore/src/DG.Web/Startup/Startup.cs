@@ -30,9 +30,8 @@ namespace DG.Web
         {
             var builder = new ConfigurationBuilder()
                      .SetBasePath(env.ContentRootPath)
-                     .AddJsonFile(Path.Combine("Configs", "appsettings.json"), optional: true, reloadOnChange: true)  
-                     .AddJsonFile(Path.Combine("Configs", $"appsettings.{env.EnvironmentName}.json"), optional: true, reloadOnChange: true)
-                     //.AddJsonFile(Path.Combine("Configs", "bundleconfig.json"), optional: true, reloadOnChange: true)
+                     .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(),"Configs", "appsettings.json"), optional: true, reloadOnChange: true)  
+                     .AddJsonFile(Path.Combine(Directory.GetCurrentDirectory(),"Configs", $"appsettings.{env.EnvironmentName}.json"), optional: true, reloadOnChange: true)
                      .AddEnvironmentVariables();                                              
             Configuration = builder.Build();
         }
@@ -67,41 +66,45 @@ namespace DG.Web
 
             /* 注册服务 */
             services.AddServices();
-            //var audienceConfig = Configuration.GetSection("Audience");
-            //services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-            //        .AddJwtBearer(options =>
-            //        {
-            //            options.TokenValidationParameters = new TokenValidationParameters
-            //            {
-            //                ValidateIssuer = true,
-            //                ValidateAudience = true,
-            //                ValidateLifetime = true,
-            //                ValidateIssuerSigningKey = true,
 
-            //                ValidIssuer = audienceConfig["Issuer"],
-            //                ValidAudience = audienceConfig["Audience"],
-            //                IssuerSigningKey = BearerHelper.Create(audienceConfig["Secret"])
-            //            };
+            #region jwt
+            var audienceConfig = Configuration.GetSection("Audience");
+            var symmetricKeyAsBase64 = audienceConfig["Secret"];
+            var keyByteArray = Encoding.ASCII.GetBytes(symmetricKeyAsBase64);
+            var signingKey = new SymmetricSecurityKey(keyByteArray);
 
-            //            options.Events = new JwtBearerEvents
-            //            {
-            //                OnAuthenticationFailed = context =>
-            //                {
-            //                    Console.WriteLine("OnAuthenticationFailed: " + context.Exception.Message);
-            //                    return Task.CompletedTask;
-            //                },
-            //                OnTokenValidated = context =>
-            //                {
-            //                    Console.WriteLine("OnTokenValidated: " + context.SecurityToken);
-            //                    return Task.CompletedTask;
-            //                }
-            //            };
-            //        });
+            var tokenValidationParameters = new TokenValidationParameters
+            {
 
-            //services.AddAuthorization(options =>
-            //{
-            //    options.AddPolicy("Member",policy => policy.RequireClaim("MembershipId"));
-            //});
+                // The signing key must match!
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = signingKey,
+
+                // Validate the JWT Issuer (iss) claim
+                ValidateIssuer = true,
+                ValidIssuer = audienceConfig["Issuer"],
+
+                // Validate the JWT Audience (aud) claim
+                ValidateAudience = true,
+                ValidAudience = audienceConfig["Audience"],
+
+                // Validate the token expiry
+                ValidateLifetime = true,
+
+                ClockSkew = TimeSpan.Zero
+            };
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(o =>
+            {
+                //不使用https
+                //o.RequireHttpsMetadata = false;
+                o.TokenValidationParameters = tokenValidationParameters;
+            }); 
+            #endregion
 
             services.AddMvc();
         }
@@ -110,25 +113,24 @@ namespace DG.Web
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             /* NLog */
-            env.ConfigureNLog(Path.Combine("Configs", "nlog.config"));
+            env.ConfigureNLog(Path.Combine(Directory.GetCurrentDirectory(),"Configs", "nlog.config"));
             loggerFactory.AddNLog();
             app.AddNLogWeb();
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
             #region JWT
-            //var audienceConfig = Configuration.GetSection("Audience");
-            //var symmetricKeyAsBase64 = audienceConfig["Secret"];
-            //var keyByteArray = Encoding.ASCII.GetBytes(symmetricKeyAsBase64);
-            //var signingKey = new SymmetricSecurityKey(keyByteArray);
-            //var SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
-            //app.UseAuthentication(new TokenProviderOptions
-            //{
-            //    Audience = audienceConfig["Audience"],
-            //    Issuer = audienceConfig["Issuer"],
-            //    SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
-            //}); 
-            app.UseAuthentication();
+            var audienceConfig = Configuration.GetSection("Audience");
+            var symmetricKeyAsBase64 = audienceConfig["Secret"];
+            var keyByteArray = Encoding.ASCII.GetBytes(symmetricKeyAsBase64);
+            var signingKey = new SymmetricSecurityKey(keyByteArray);
+            var SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
+            app.UseAuthentication(new TokenProviderOptions
+            {
+                Audience = audienceConfig["Audience"],
+                Issuer = audienceConfig["Issuer"],
+                SigningCredentials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256)
+            });
             #endregion
 
             if (env.IsDevelopment())
