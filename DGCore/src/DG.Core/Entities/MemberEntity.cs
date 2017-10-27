@@ -1,4 +1,5 @@
 ﻿using ACC.Application;
+using DG.Core.Entities.Enum;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -15,31 +16,8 @@ namespace DG.Core.Entities
     {
         public const int MaxNameLength = 256;
         public const int MaxDescriptionLength = 64 * 1024; //64KB
-
-        /// <summary>
-        /// 密码
-        /// </summary>
-        [Required]
-        public string Password { get; set; }
-
-        [Required]
-        public string Secretkey { get; set; }
-        /// <summary>
-        /// 会员用户名
-        /// </summary>
-        public string MemberName { get; set; }
-
-        /// <summary>
-        /// 手机号码
-        /// </summary>
-        [Required]
-        public string Mobile { get; set; }
-
-        /// <summary>
-        /// 性别
-        /// </summary>
-        public string Gender { get; set; }
-
+        
+        public long UsersID { get; set; }
 
         /// <summary>
         /// 会员真实姓名
@@ -62,5 +40,15 @@ namespace DG.Core.Entities
         /// </summary>
         [MaxLength(MaxDescriptionLength)]
         public string Description { get; set; }
+
+        /// <summary>
+        /// 会员等级
+        /// </summary>
+        public LevelType Level { get; set; }
+
+        /// <summary>
+        /// 用户基本信息
+        /// </summary>
+        public UsersEntity Users { get; set; }
     }
 }

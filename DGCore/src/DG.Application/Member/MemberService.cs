@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DG.Application.Member
 {
-    public class MemberService :IMemberService
+    public class MemberService : IMemberService
     {
         private readonly DGDbContext _dbContext;
         private readonly DbSet<MemberEntity> _dbSet;
@@ -23,41 +23,9 @@ namespace DG.Application.Member
             _dbSet = _dbContext.Set<MemberEntity>();
         }
 
-        public MemberOutput Add(AddMemberInput input)
-        {
-            #region 处理密码
-            var key = UserHelper.GenUserSecretkey();
-            var pwd = PasswordHelper.Encrypt(input.Password, key);
-            input.Password = pwd;
-            input.Secretkey = key;
-            #endregion
-
-            var entity = input.MapTo<AddMemberInput, MemberEntity>();
-            var entityModel = _dbSet.Add(entity).Entity;
-            var model = entityModel.MapTo<MemberEntity, MemberOutput>();
-            _dbContext.SaveChanges();
-            return model;
-        }
-
-        public long Delete(AddMemberInput input)
-        {
-            var entity = input.MapTo<AddMemberInput, MemberEntity>();
-            var entityModel=_dbSet.Remove(entity).Entity;
-            _dbContext.SaveChanges();
-            return entityModel.ID;
-        }
-
-        public long DeleteByKey(long key)
-        {
-           var entity= _dbSet.Find(key);
-            var entityModel = _dbSet.Remove(entity).Entity;
-            _dbContext.SaveChanges();
-            return entityModel.ID;
-        }
-
         public void Dispose()
         {
-            
+
         }
     }
 }

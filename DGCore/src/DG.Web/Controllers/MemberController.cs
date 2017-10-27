@@ -70,9 +70,9 @@ namespace DG.Web.Controllers
 
         // GET: Member/Delete/5
         [Authorize]
-        public ActionResult Delete(int id)
+        public JsonResult Delete(int id)
         {
-            return View(Ok("jiushiokle"));
+            return Json(Ok(id));
         }
 
         // POST: Member/Delete/5

@@ -6,6 +6,9 @@ using System.Text;
 
 namespace ACC.Application
 {
+    /// <summary>
+    /// 数据库实体的基类
+    /// </summary>
     [Serializable]
     public class BaseEntity
     {

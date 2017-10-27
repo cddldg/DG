@@ -17,6 +17,7 @@ namespace ACC.Application
     {
         /// <summary>
         /// Add model with entity
+        /// 需要创建的实体以及QueryFilter设置
         /// </summary>
         /// <param name="modelBuilder">salf</param>
         public static void AddModelBuilder(this ModelBuilder modelBuilder)
@@ -54,6 +55,12 @@ namespace ACC.Application
                 SetActiveableQueryFilter(entityTypeBuilder);
             }
         }
+        /// <summary>
+        /// 添加查询过滤
+        /// IsDeleted==false
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="entityTypeBuilder"></param>
         private static void SetActiveableQueryFilter<T>(this EntityTypeBuilder<T> entityTypeBuilder) where T : BaseEntity
         {
             entityTypeBuilder.HasQueryFilter(p => p.IsDeleted==false);

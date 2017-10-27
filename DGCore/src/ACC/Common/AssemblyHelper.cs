@@ -34,6 +34,12 @@ namespace ACC.Common
             List<Type> ret = allTypes.ToList();
             return ret;
         }
+
+        /// <summary>
+        /// 找到实体codefist
+        /// </summary>
+        /// <param name="assembly"></param>
+        /// <returns></returns>
         public static List<Type> FindEntity(Assembly assembly)
         {
             IEnumerable<Type> allTypes = assembly.GetTypes();

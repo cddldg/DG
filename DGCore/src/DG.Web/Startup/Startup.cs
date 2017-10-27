@@ -105,7 +105,7 @@ namespace DG.Web
                 o.TokenValidationParameters = tokenValidationParameters;
             }); 
             #endregion
-
+            
             services.AddMvc();
         }
 
@@ -115,7 +115,6 @@ namespace DG.Web
             /* NLog */
             env.ConfigureNLog(Path.Combine(Directory.GetCurrentDirectory(),"Configs", "nlog.config"));
             loggerFactory.AddNLog();
-            app.AddNLogWeb();
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
@@ -177,7 +176,7 @@ namespace DG.Web
                              public class ApiBaseController : Controller
                              {
                              }
-                        ****/ 
+                        ****/
                 #endregion
 
                 routes.MapAreaRoute(

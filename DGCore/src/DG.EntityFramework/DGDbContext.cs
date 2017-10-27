@@ -37,6 +37,7 @@ namespace DG.EntityFramework
                 #region 自动生成增删改的基础数据：id，time
                 string name = entry.State.ToString();
                 string userId = "0";
+                /*添加操作*/
                 if (entry.State == EntityState.Added)
                 {
                     entry.Property("CreateTime").CurrentValue = DateTime.Now;
@@ -45,6 +46,7 @@ namespace DG.EntityFramework
                     userId = entry.Property("CreateUserID").CurrentValue.ToString();
                     name = "添加";
                 }
+                /*修改操作*/
                 if (entry.State == EntityState.Modified)
                 {
                     entry.Property("UpdateTime").CurrentValue = DateTime.Now;
@@ -61,6 +63,7 @@ namespace DG.EntityFramework
                     }
                     
                 }
+                /*删除操作*/
                 if (entry.State == EntityState.Deleted)
                 {
                     userId = entry.Property("UpdateUserID").CurrentValue.ToString();

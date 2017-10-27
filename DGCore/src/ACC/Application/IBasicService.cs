@@ -6,7 +6,7 @@ using System.Text;
 namespace ACC.Application
 {
     /// <summary>
-    /// 实体基础操作业务服务
+    /// 实体基础操作业务服务(单表)
     /// </summary>
     /// <typeparam name="TEntiy">实体</typeparam>
     public interface IBasicEntityService: IAppService

@@ -21,10 +21,5 @@ namespace ACC.Common
             string code = DateTime.Now.ToString("yyyyMMddHHmmss") + strRandom;
             return code;
         }
-
-        public static bool ExitUser(string username, string password)
-        {
-            return (username == "admin" && password == "111111");
-        }
     }
 }

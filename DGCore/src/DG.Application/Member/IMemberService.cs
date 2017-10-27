@@ -10,9 +10,7 @@ namespace DG.Application.Member
 {
     public interface IMemberService: IAppService
     {
-        MemberOutput Add(AddMemberInput input);
-        long Delete(AddMemberInput input);
-        long DeleteByKey(long key);
+       
         
     }
 }
