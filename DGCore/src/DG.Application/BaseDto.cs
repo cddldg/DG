@@ -4,21 +4,24 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 using ACC.Convert;
-
+using Newtonsoft.Json;
 
 namespace DG.Application
 {
+    [Serializable]
     public class BaseDto
     {
         /// <summary>
         /// 主键编号
         /// </summary>
         [Key]
+        [JsonConverter(typeof(LongConverter))]
         public long ID { get; set; }
 
         /// <summary>
         /// 创建人
         /// </summary>
+        [JsonConverter(typeof(LongConverter))]
         public long CreateUserID { get; set; }
 
         /// <summary>
@@ -29,6 +32,7 @@ namespace DG.Application
         /// <summary>
         /// 最后更新人
         /// </summary>
+        [JsonConverter(typeof(LongConverter))]
         public long UpdateUserID { get; set; }
 
         /// <summary>
@@ -39,6 +43,7 @@ namespace DG.Application
         /// <summary>
         /// 是否删除
         /// </summary>
+        [JsonConverter(typeof(BoolConverter))]
         public bool IsDeleted { get; set; }
 
         /// <summary>

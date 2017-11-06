@@ -10,15 +10,11 @@ namespace ACC.Application
     /// </summary>
     public  class Result
     {
-        private YesNo _isError = YesNo.No;
         /// <summary>
         /// 是否有错误
         /// </summary>
-        public YesNo IsError
-        {
-            get => _isError;
-            set => _isError = value;
-        }
+        public YesNo IsError { get; set; } = YesNo.No;
+
         /// <summary>
         /// 错误代码
         /// </summary>
@@ -35,20 +31,13 @@ namespace ACC.Application
         /// </summary>
         public string Additional { get; set; }
 
-        private DateTime _serviceTime = DateTime.Now;
 
-        public YesNo Code { get => _isError; set => _isError = value; }
-        public string Msg { get => ErrorMessage; set => ErrorMessage = value; }
         public int Count { get; set; }
         /// <summary>
         /// 系统时间
         /// </summary>
-        public DateTime ServiceTime
-        {
-            get => _serviceTime;
-            set => _serviceTime = value;
-        }
-        
+        public DateTime ServiceTime { get; set; }= DateTime.Now;
+
     }
 
     /// <summary>

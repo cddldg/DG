@@ -21,6 +21,9 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using ACC.Common;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
+using ACC.Convert;
 
 namespace DG.Web
 {
@@ -61,8 +64,30 @@ namespace DG.Web
             //}).AddControllersAsServices(); 
             #endregion
 
-            
-            services.AddDbContext<DGDbContext>(options => options.UseMySql(Configuration.GetConnectionString("MySQL")));
+            #region DbConnection
+            var DbType = Configuration.GetConnectionString("DbType");
+            if (DbType == "Sqlite")
+            {
+                //services.AddDbContext<DGDbContext>(options => options.UseMySql(Configuration.GetConnectionString(DbType)));
+            }
+            else if (DbType == "MsSql")
+            {
+                //services.AddDbContext<DGDbContext>(options => options.UseMySql(Configuration.GetConnectionString(DbType)));
+            }
+            else if (DbType == "PostgreSql")
+            {
+                //services.AddDbContext<DGDbContext>(options => options.UseMySql(Configuration.GetConnectionString(DbType)));
+            }
+            else if (DbType == "MySQL")
+            {
+                services.AddDbContext<DGDbContext>(options => options.UseMySql(Configuration.GetConnectionString(DbType)));
+            }
+            else
+            {
+                services.AddDbContext<DGDbContext>(options => options.UseMySql(Configuration.GetConnectionString(DbType)));
+            } 
+            #endregion
+
 
             /* 注册服务 */
             services.AddServices();
@@ -103,10 +128,28 @@ namespace DG.Web
                 //不使用https
                 //o.RequireHttpsMetadata = false;
                 o.TokenValidationParameters = tokenValidationParameters;
-            }); 
+            });
             #endregion
             
-            services.AddMvc();
+            services.AddMvc()
+                .AddJsonOptions(options =>
+                {
+                    //忽略循环引用
+                    //options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+                    //不使用驼峰样式的key
+                    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+
+                    //日期类型默认格式化处理  
+                    options.SerializerSettings.DateFormatHandling = Newtonsoft.Json.DateFormatHandling.MicrosoftDateFormat;
+                    options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+                    
+                    //空值处理  
+                    //options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                    
+                    //默认转换  失败
+                    //options.SerializerSettings.Converters.Add(new LongConverter());
+                    //options.SerializerSettings.Converters.Add(new BoolConverter());
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -145,7 +188,7 @@ namespace DG.Web
             app.UseStaticFiles();
 
             
-
+            
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

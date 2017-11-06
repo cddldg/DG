@@ -34,6 +34,11 @@ namespace DG.Core
             /// </summary>
             public const string NotImplemented = "S0004";
 
+            /// <summary>
+            /// 空数据
+            /// </summary>
+            public const string EmptyData = "S0005";
+
             #endregion
 
             #region 公共错误代码--前缀C

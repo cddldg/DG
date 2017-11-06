@@ -1,6 +1,5 @@
 ﻿@{
-    Layout =null;
-    ViewData["Title"] = "Index";
+    ViewBag.Title = "会员";
 }
 
 <table id="mytable" class="layui-table" lay-filter="myfilter"></table>
@@ -17,28 +16,38 @@
         </button>
     </div>
 </script>
+@section Scripts{ 
 <script>
-    layui.use(['layer', 'table', 'element'], function () {
-
+    layui.use(['token','layer', 'table', 'element'], function () {
         var layer = layui.layer //弹层
         var table = layui.table //表格
         var element = layui.element; //元素操作
+        var token = layui.token;
         var $ = layui.jquery;
-
-        
-
         /*执行渲染*/
         table.render({
             elem: '#mytable',
-            url: '/api/member/GetPager',
+            url: '/api/Member/GetPager',
+            token: token.gettoken(),//记得升级要修改table.js源码ajax加 headers: { Authorization: n.token || "Bearer " }
+            method:'get',
             request: {
                 pageName: 'pageIndex', //页码的参数名称，默认：page
                 limitName: 'pageSize' //每页数据量的参数名，默认：limit
             },
+            response: {
+                statusName: 'IsError' //数据状态的字段名称，默认：code
+                , statusCode: 0 //成功的状态码，默认：0
+                , msgName: 'ErrorMessage' //状态信息的字段名称，默认：msg
+                , countName: 'Count' //数据总数的字段名称，默认：count
+                , dataName: 'Data' //数据列表的字段名称，默认：data
+            },    
+            //where: {
+            //    //Authorization: "Bearer jjtoken"
+            //},
             height: 'full-250',
             even: true,
             initSort: {
-                field: 'name', //排序字段，对应 cols 设定的各字段名
+                field: 'Name', //排序字段，对应 cols 设定的各字段名
                 type: 'asc' //排序方式  asc: 升序、desc: 降序、null: 默认排序
             },
             page: true,
@@ -48,12 +57,12 @@
             id: 'datatable',
             cols: [[
                 { checkbox: true },
-                { field: 'id', title: 'ID', width: 200 },
-                { field: 'name', title: '用户名', width: 100, sort: true },
-                { field: 'mobile', title: '手机号码', width: 120 },
-                { field: 'createTime', title: '创建时间', width: 200 },
-                { field: 'updateTime', title: '最后更新时间', width: 200 },
-                { field: 'isDeleted', title: '是否删除', width: 100 },
+                { field: 'ID', title: 'ID', width: 200 },
+                { field: 'Name', title: '用户名', width: 100, sort: true },
+                { field: 'Mobile', title: '手机号码', width: 120 },
+                { field: 'CreateTime', title: '创建时间', width: 200 },
+                { field: 'UpdateTime', title: '最后更新时间', width: 200 },
+                { field: 'IsDeleted', title: '是否删除', width: 100 },
                 { fixed: 'right', title: '操作', width: 160, align: 'center', toolbar: '#mybar' } //这里的toolbar值是模板元素的选择器
             ]]
         });
@@ -67,9 +76,9 @@
             var data = obj.data //获得当前行数据
                 , layEvent = obj.event; //获得 lay-event 对应的值
             if (layEvent === 'detail') {
-                layer.msg('查看操作:' + data.name);
+                layer.msg('查看操作:' + data.Name);
             } else if (layEvent === 'del') {
-                layer.confirm('真的删除行么:' + data.name, function (index) {
+                layer.confirm('真的删除行么:' + data.Name, function (index) {
                     obj.del(); //删除对应行（tr）的DOM结构
                     layer.close(index);
                     //向服务端发送删除指令
@@ -112,5 +121,6 @@
         });
     });
 </script>
+}
 
 

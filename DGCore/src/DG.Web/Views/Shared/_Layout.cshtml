@@ -3,178 +3,36 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>@ViewData["Title"] - dldg.ink</title>
+    <title>@ViewBag.Title - dldg.ink</title>
+    <!--css-->
     <link href="~/plugin/layui/css/layui.css" rel="stylesheet" />
     <environment include="Development">
-            <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-        </environment>
-        <environment exclude="Staging,Production">
-            <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-        </environment>
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    </environment>
+    <environment exclude="Staging,Production">
+        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+    </environment>
+    <!--js-->
+    <script src="~/plugin/layui/layui.js"></script>
+    <script src="~/plugin/layui/mymodules/token.js"></script>
+    <environment exclude="Development">
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
+    <environment exclude="Staging,Production">
+        <script src="~/js/site.js" asp-append-version="true"></script>
+    </environment>
 </head>
 <body class="layui-layout-body">
 
-    <div class="layui-layout layui-layout-admin">
-        <div class="layui-header">
-            <div class="layui-logo">dldg Admin </div>
-            <!-- 头部区域（可配合layui已有的水平导航） -->
-            <ul class="layui-nav layui-layout-left">
-                <li class="layui-nav-item"><a href="">控制台</a></li>
-                <li class="layui-nav-item"><a href="">商品管理</a></li>
-                <li class="layui-nav-item"><a href="">用户</a></li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">其它系统</a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="">邮件管理</a></dd>
-                        <dd><a href="">消息管理</a></dd>
-                        <dd><a href="">授权管理</a></dd>
-                    </dl>
-                </li>
-            </ul>
-            <ul class="layui-nav layui-layout-right">
-                <li class="layui-nav-item">
-                    <a href="javascript:;">
-                        <img src="http://test.file.pisen.com.cn:9212/QJW3C1000/Product/201710/08314104627348.png" class="layui-nav-img layui-anim-rotate">
-                        dldg
-                    </a>
-                    <dl class="layui-nav-child">
-                        <dd><a href="">基本资料</a></dd>
-                        <dd><a href="">安全设置</a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item"><a href="">退了</a></li>
-            </ul>
-        </div>
+        @RenderBody()
 
-        <div class="layui-side layui-bg-black">
-            <div class="layui-side-scroll">
-                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree" lay-filter="leftnav">
-                    <li class="layui-nav-item layui-this">
-                        <a href="javascript:;"><i class="layui-icon">&#xe68e;</i>首页</a>
-                    </li>
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a class="" href="javascript:;">所有商品</a>
-                        <dl class="layui-nav-child">
-                            <dd data-type="tabAdd" data-id="1" data-url="/Member/Index" ><a href="javascript:;"><i class="layui-icon">&#xe612;</i>Member</a></dd>
-                            <dd data-type="tabAdd" data-id="2" data-url="/Home/Error" ><a href="javascript:;"><i class="layui-icon">&#xe65f;</i>Menu</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">解决方案</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">列表一</a></dd>
-                            <dd><a href="javascript:;">列表二</a></dd>
-                            <dd><a href="">超链接</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item"><a href="">云市场</a></li>
-                    <li class="layui-nav-item"><a href="">发布商品</a></li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="layui-body">
-            <!-- 内容主体区域 -->
-            <div class="layui-tab" lay-filter="mytab" lay-allowclose="true">
-                <ul class="layui-tab-title">
-                    <li lay-id="0" class="layui-this"><i class="layui-icon">&#xe68e;</i>首页</li>
-                </ul>
-                <div class="layui-tab-content">
-                    <div class="layui-tab-item layui-show">
-                        <div class="layui-carousel" id="test10">
-                            <div carousel-item="">
-                                <div>//res.layui.com/images/layui/demo/1.png"</div>
-                                <div>//res.layui.com/images/layui/demo/2.png"</div>
-                                <div>//res.layui.com/images/layui/demo/3.png"</div>
-                                <div>//res.layui.com/images/layui/demo/4.png"</div>
-                                <div>//res.layui.com/images/layui/demo/5.png"</div>
-                                <div>//res.layui.com/images/layui/demo/6.png"</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div style="padding: 1px;">
-                @RenderBody()
-            </div>
-        </div>
-
-        <div class="layui-footer">
-            <!-- 底部固定区域 -->
-            © <a href="http://www.dldg.ink" target="_blank">dldg.ink</a> - 底部固定区域
-        </div>
-    </div>
-    <script src="~/plugin/layui/layui.js"></script>
-    @*<environment exclude="Development">
-            <script src="~/js/layout.js" asp-append-version="true"></script>
-        </environment>
-        <environment exclude="Staging,Production">
-            <script src="~/js/layout.min.js" asp-append-version="true"></script>
-        </environment>*@
     <script>
-
-        /*******************
-        * layout js
-        * @@param
-        * @@return void
-        * @@author hym 2017/10/19
-        ********************/
-        var layout = {
-            init: function () {
-                layui.use(['element', 'layer', 'carousel'], function () {
-                    var $ = layui.jquery;
-                    var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
-
-                    var layer = layui.layer; //弹层
-                    var carousel = layui.carousel;
-
-                    //layer.config({
-                    //    skin: 'demo-class'
-                    //});
-
-                    //图片轮播
-                    carousel.render({
-                        elem: '#test10',
-                        width: '778px',
-                        height: '440px',
-                        interval: 3000
-                    });
-                    //触发事件
-                    var active = {
-                        tabAdd: function (tabid, name, url) {
-                            var tabTitleDiv = $('.layui-tab[lay-filter=mytab]').children('.layui-tab-title');
-                            var exist = tabTitleDiv.find('li[lay-id=' + tabid + ']');
-                            console.log(exist);
-                            if (exist.length > 0) {
-                                element.tabChange('mytab', tabid);
-                            } else {
-                                var index = layer.load();
-                                $.get(url, function (data) {
-                                    element.tabAdd('mytab', {
-                                        title: name,
-                                        content: data,
-                                        id: tabid
-                                    });
-                                    element.tabChange('mytab', tabid);
-                                    layer.close(index);
-                                });
-                            }
-                        }
-                    };
-                    //监听菜单
-                    element.on('nav(leftnav)', function (elem) {
-                        var type = $(elem).data('type');
-                        var id = $(elem).data('id');
-                        var name = $(elem).find('a').html();
-                        var url = $(elem).data('url');
-                        active[type] ? active[type].call($(elem), id, name, url) : '';
-                    });
-                });
-            }
-        };
-
-        layout.init();
+        //config的设置是全局的token
+        layui.config({
+            base: '/plugin/layui/mymodules/' //假设这是token.js所在的目录
+        }).extend({ //设定模块别名
+            token: 'token' //如果token.js是在根目录，也可以不用设定别名
+        });
     </script>
     @RenderSection("Scripts", required: false)
 </body>

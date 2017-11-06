@@ -33,8 +33,16 @@ namespace DG.Application
             {
                 var DbSet = _dbContext.Set<TEntity>();
                 var resultEntity = DbSet.Add(entity);
-                _dbContext.SaveChanges();
-                result.Data = resultEntity.Entity.MapTo<TEntity,TDto>();
+                var rows=_dbContext.SaveChanges();
+                if (rows > 0)
+                {
+                    result.Data = resultEntity.Entity.MapTo<TEntity, TDto>();
+                }
+                else
+                {
+                    throw new Exception("添加失败");
+                }
+                
             }
             catch (Exception ex)
             {
@@ -121,7 +129,16 @@ namespace DG.Application
             {
                 var DbSet = _dbContext.Set<TEntity>();
                 var resultEntity = DbSet.AsNoTracking().PageBy(out int count,pageIndex,pageSize, orderby).ToList();
-                result.Data = resultEntity.MapTo<TEntity, TDto>();
+                if(count>0)
+                {
+                    result.Data = resultEntity.MapTo<TEntity, TDto>();
+                }
+                else
+                {
+                    result.IsError = YesNo.Yes;
+                    result.ErrorMessage = "没有查询到您需要的数据";
+                    result.ErrorCode = ErrorCode.EmptyData;
+                }
                 result.Count = count;
             }
             catch (Exception ex)
