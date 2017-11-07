@@ -10,10 +10,10 @@ using System.Text;
 
 namespace DG.Controllers.Api
 {
-    public class UsersController : BaseApiController
+    public class Users : BaseApiController
     {
         private IBasicEntityService _entityService;
-        public UsersController(IBasicEntityService basicEntityService)
+        public Users(IBasicEntityService basicEntityService)
         {
             _entityService = basicEntityService;
         }
@@ -27,9 +27,10 @@ namespace DG.Controllers.Api
             var pwd = PasswordHelper.Encrypt(input.Password, key);
             input.Password = pwd;
             input.Secretkey = key;
-            //input.Name = CNName.GetRandomName();
-            input.UserName = CNName.GetRandomName();
+            input.UserName = CNName.GetRandomString();
+            input.Gender = DateTime.Now.Second % 2 == 0 ? Core.Entities.Enum.Gender.女 : Core.Entities.Enum.Gender.男;
             input.Mobile = CNMobile.GetRandomMobNO();
+            input.Birthday = CNName.GetRandomDateTime();
             #endregion
             var model = _entityService.AddDto<UsersEntity, UsersInput>(input);
             return model;

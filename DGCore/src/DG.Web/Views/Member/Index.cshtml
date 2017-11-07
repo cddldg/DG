@@ -44,7 +44,7 @@
             //where: {
             //    //Authorization: "Bearer jjtoken"
             //},
-            height: 'full-250',
+            height: 'full-84',
             even: true,
             initSort: {
                 field: 'Name', //排序字段，对应 cols 设定的各字段名
@@ -69,7 +69,7 @@
         /*监听复选框*/
         table.on('checkbox(myfilter)', function (obj) {
             var checkStatus = table.checkStatus('datatable'); //test即为基础参数id对应的值
-            layer.msg(obj.data.id);
+            //layer.msg(obj.data ? obj.data.ID : obj.type);
         });
         /*监听工具条*/
         table.on('tool(myfilter)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"

@@ -82,5 +82,50 @@ namespace ACC.Common
             string nation = nationname[rnd.Next(0, 55)];
             return nation;
         }
+
+        /// <summary>
+        /// 随机生产用户名英文的
+        /// </summary>
+        /// <param name="length"></param>
+        /// <returns></returns>
+        public static string GetRandomString(int length = 10)
+        {
+            string randStr = "";
+            Random rd = new Random();
+            byte[] str = new byte[length];
+            int i;
+            for (i = 0; i < length - 1; i++)
+            {
+                int a = 0;
+                while (!((a >= 48 && a <= 57) || (a >= 97 && a <= 122)))
+                {
+                    a = rd.Next(48, 122);
+                }
+                str[i] = (byte)a;
+            }
+            string username = new string(UnicodeEncoding.ASCII.GetChars(str));
+            Random r = new Random(unchecked((int)DateTime.Now.Ticks));
+            string s1 = ((char)r.Next(97, 122)).ToString();
+            username = username.Replace("/0", "");
+            randStr = s1 + username;
+            return randStr;
+        }
+
+        /// <summary>
+        /// 随机时间
+        /// </summary>
+        /// <returns></returns>
+        public static DateTime GetRandomDateTime()
+        {
+            DateTime startDateTime = DateTime.Now.AddYears(-150);
+            DateTime endDateTime = DateTime.Now;
+            var randomNumber = new Random();
+
+            TimeSpan diff = endDateTime - startDateTime;
+            Double totalSeconds = diff.TotalSeconds;
+            Double randomSeconds = randomNumber.NextDouble() * totalSeconds;
+            DateTime randomDateTime = startDateTime.AddSeconds(randomSeconds);
+            return randomDateTime;
+        }
     }
 }

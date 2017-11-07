@@ -3,20 +3,20 @@
 }
 
 @*<div class="layui-tab-content">
-    <div class="layui-tab-item layui-show">
-        <div class="layui-carousel" id="test10">
-            <div carousel-item="">
-                <div>img src="//res.layui.com/images/layui/demo/1.png"</div>
-                <div>img src="//res.layui.com/images/layui/demo/2.png"</div>
-                <div>img src="//res.layui.com/images/layui/demo/3.png"</div>
-                <div>img src="//res.layui.com/images/layui/demo/4.png"</div>
-                <div>img src="//res.layui.com/images/layui/demo/5.png"</div>
-                <div>img src="//res.layui.com/images/layui/demo/6.png"</div>
-                <div>img src="//res.layui.com/images/layui/demo/7.png"</div>
+        <div class="layui-tab-item layui-show">
+            <div class="layui-carousel" id="test10">
+                <div carousel-item="">
+                    <div>img src="//res.layui.com/images/layui/demo/1.png"</div>
+                    <div>img src="//res.layui.com/images/layui/demo/2.png"</div>
+                    <div>img src="//res.layui.com/images/layui/demo/3.png"</div>
+                    <div>img src="//res.layui.com/images/layui/demo/4.png"</div>
+                    <div>img src="//res.layui.com/images/layui/demo/5.png"</div>
+                    <div>img src="//res.layui.com/images/layui/demo/6.png"</div>
+                    <div>img src="//res.layui.com/images/layui/demo/7.png"</div>
+                </div>
             </div>
         </div>
-    </div>
-</div>*@
+    </div>*@
 
 
 <div class="layui-layout layui-layout-admin">
@@ -61,8 +61,9 @@
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">所有商品</a>
                     <dl class="layui-nav-child">
-                        <dd data-type="tabAdd" data-id="1" data-url="/Member/Index"><a href="javascript:;"><i class="layui-icon">&#xe612;</i>Member</a></dd>
-                        <dd data-type="tabAdd" data-id="2" data-url="/Home/Error"><a href="javascript:;"><i class="layui-icon">&#xe65f;</i>Menu</a></dd>
+                        <dd data-type="tabAdd" data-id="11" data-url="/Member/Index"><a href="javascript:;"><span class="layui-icon" data-url="/Member/Index">&#xe612;</span>会员</a></dd>
+                        <dd data-type="tabAdd" data-id="22" data-url="/Home/Error"><a href="javascript:;"><span class="layui-icon" data-url="/Home/Error">&#xe65f;</span>菜单</a></dd>
+                        <dd data-type="tabAdd" data-id="33" data-url="/Users/Index"><a href="javascript:;"><span class="layui-icon" data-url="/Users/Index">&#xe613;</span>用户</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item">
@@ -88,36 +89,18 @@
         </div>
         <!-- 内容主体区域 -->
         <div style="padding: 1px;">
-           <iframe id="main" src="" width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
+            <iframe id="main" src="" width="100%" height="100%" frameborder="no" border="0" marginwidth="0" marginheight="0" scrolling="no" allowtransparency="yes"></iframe>
         </div>
     </div>
+    <!-- 底部固定区域 -->
+    @*<div class="layui-footer">
 
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        © <a href="http://www.dldg.ink" target="_blank">dldg.ink</a> - 底部固定区域
-    </div>
+            © <a href="http://www.dldg.ink" target="_blank">dldg.ink</a> - 底部固定区域
+        </div>*@
 </div>
 
 @section Scripts{
-    @*<script>
-        var index = {
-            init: function () {
-                layui.use(['element', 'layer', 'carousel'], function () {
-                    var carousel = layui.carousel;
-
-                    //图片轮播
-                    carousel.render({
-                        elem: '#test10',
-                        width: '778px',
-                        height: '440px',
-                        interval: 3000
-                    });
-                });
-            }
-        };
-        index.init();
-    </script>*@
-<script>
+    <script>
         /*******************
         * layout js
         * @@param
@@ -127,7 +110,7 @@
         var layout = {
             init: function () {
                 var ifm = document.getElementById("main");
-                ifm.height = document.documentElement.clientHeight;
+                ifm.height = document.documentElement.clientHeight - 180;
                 layui.use(['element', 'layer'], function () {
                     var $ = layui.jquery;
                     var element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
@@ -149,7 +132,7 @@
                                     id: tabid
                                 });
                                 element.tabChange('mytab', tabid);
-                                 
+
                                 layer.close(index);
                                 //$.get(url, function (data) {
                                 //    element.tabAdd('mytab', {
@@ -173,19 +156,7 @@
                         active[type] ? active[type].call($(elem), id, name, url) : '';
                     });
                     element.on('tab(mytab)', function (data) {
-                        //console.log(this); //当前Tab标题所在的原始DOM元素
-                        //console.log(data.index); //得到当前Tab的所在下标
-                        //console.log(data.elem); //得到当前的Tab大容器
-
-                        //var type = $(elem).data('type'); //事件类型
-                        //var id = $(elem).data('id'); //
-                        //var name = $(elem).find('a').html();
-                        //var url = $(elem).data('url');
-
-                        console.log(this); //当前Tab标题所在的原始DOM元素
-                        console.log(data.index); //得到当前Tab的所在下标
-                        console.log(data.elem); //得到当前的Tab大容器
-                        var url = 'https://www.baidu.com';
+                        var url = $(this).find('span').data('url');
                         $("#main", parent.document.body).attr("src", url)
                     });
                 });
@@ -193,5 +164,5 @@
         };
 
         layout.init();
-</script>
+    </script>
 }
