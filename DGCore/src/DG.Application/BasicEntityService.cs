@@ -15,11 +15,11 @@ namespace DG.Application
     public class BasicEntityService : IBasicEntityService
     {
         #region Ctor
-        protected ILogger log;
+        protected ILogger _log;
         protected readonly DGDbContext _dbContext;
         public BasicEntityService(DGDbContext db, ILoggerFactory loggerFactory)
         {
-            log = loggerFactory.CreateLogger<BasicEntityService>();
+            _log = loggerFactory.CreateLogger<BasicEntityService>();
             _dbContext = db;
         } 
         #endregion
@@ -49,7 +49,7 @@ namespace DG.Application
                 result.IsError = YesNo.Yes;
                 result.ErrorMessage = ex.Message;
                 result.ErrorCode = ErrorCode.Exception;
-                log.LogError(ex.Message,ex);
+                _log.LogError(ex.Message,ex);
             }
             return result;
         }
@@ -78,7 +78,7 @@ namespace DG.Application
                 result.IsError = YesNo.Yes;
                 result.ErrorMessage = ex.Message;
                 result.ErrorCode = ErrorCode.Exception;
-                log.LogError(ex.Message, ex);
+                _log.LogError(ex.Message, ex);
             }
             return result;
         }
@@ -98,7 +98,7 @@ namespace DG.Application
                 result.IsError = YesNo.Yes;
                 result.ErrorMessage = ex.Message;
                 result.ErrorCode = ErrorCode.Exception;
-                log.LogError(ex.Message, ex);
+                _log.LogError(ex.Message, ex);
             }
             return result;
         }
@@ -118,7 +118,7 @@ namespace DG.Application
                 result.IsError = YesNo.Yes;
                 result.ErrorMessage = ex.Message;
                 result.ErrorCode = ErrorCode.Exception;
-                log.LogError(ex.Message, ex);
+                _log.LogError(ex.Message, ex);
             }
             return result;
         }
@@ -146,7 +146,7 @@ namespace DG.Application
                 result.IsError = YesNo.Yes;
                 result.ErrorMessage = ex.Message;
                 result.ErrorCode = ErrorCode.Exception;
-                log.LogError(ex.Message, ex);
+                _log.LogError(ex.Message, ex);
             }
             return result;
         }
@@ -168,7 +168,7 @@ namespace DG.Application
                 result.IsError = YesNo.Yes;
                 result.ErrorMessage = ex.Message;
                 result.ErrorCode = ErrorCode.Exception;
-                log.LogError(ex.Message, ex);
+                _log.LogError(ex.Message, ex);
             }
             return result;
         }
@@ -191,7 +191,7 @@ namespace DG.Application
                 result.IsError = YesNo.Yes;
                 result.ErrorMessage = ex.Message;
                 result.ErrorCode = ErrorCode.Exception;
-                log.LogError(ex.Message, ex);
+                _log.LogError(ex.Message, ex);
             }
             return result;
         }
@@ -218,7 +218,7 @@ namespace DG.Application
                 result.IsError = YesNo.Yes;
                 result.ErrorMessage = ex.Message;
                 result.ErrorCode = ErrorCode.Exception;
-                log.LogError(ex.Message, ex);
+                _log.LogError(ex.Message, ex);
             }
             return result;
         }
@@ -238,7 +238,7 @@ namespace DG.Application
                 result.IsError = YesNo.Yes;
                 result.ErrorMessage = ex.Message;
                 result.ErrorCode = ErrorCode.Exception;
-                log.LogError(ex.Message, ex);
+                _log.LogError(ex.Message, ex);
             }
             return result;
         } 
@@ -261,7 +261,7 @@ namespace DG.Application
                 result.IsError = YesNo.Yes;
                 result.ErrorMessage = ex.Message;
                 result.ErrorCode = ErrorCode.Exception;
-                log.LogError(ex.Message, ex);
+                _log.LogError(ex.Message, ex);
             }
             return result;
         }
@@ -280,10 +280,10 @@ namespace DG.Application
         /// </summary>
         public void Dispose()
         {
-            if (_dbContext != null)
-            {
-                _dbContext.Dispose();
-            }
+            //if (_dbContext != null)
+            //{
+            //    _dbContext.Dispose();
+            //}
         }
         #endregion
     }

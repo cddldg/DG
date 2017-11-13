@@ -4,13 +4,18 @@ using System.Text;
 
 namespace DG.Core
 {
-    public class Constant
+    public struct Constant
     {
+        public struct ConstNames
+        {
+            public const string Token = "_SessionToken";
+            public const string Users = "_SessionUsersOutput";
+        }
         /// <summary>
         /// 错误代码
         /// 错误代码格式--前缀+xxxx
         /// </summary>
-        public class ErrorCode
+        public struct ErrorCode
         {
             #region 系统异常代码--前缀S
 

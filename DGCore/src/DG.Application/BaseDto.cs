@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Text;
 using ACC.Convert;
 using Newtonsoft.Json;
+using ACC.Extensions;
 
 namespace DG.Application
 {
@@ -53,6 +54,15 @@ namespace DG.Application
         public override string ToString()
         {
             return this.ToJson();
+        }
+
+        /// <summary>
+        /// CreateTime距离现在时间
+        /// </summary>
+        public string IntervalTime
+        {
+            get => CreateTime.TimeIntervalCN();
+            set => IntervalTime = value;
         }
     }
 }

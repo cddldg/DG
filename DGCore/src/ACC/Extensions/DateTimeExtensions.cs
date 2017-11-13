@@ -40,7 +40,7 @@ namespace ACC.Extensions
 
         #region 时间转文本
 
-        public static string TimeIntervalCN(this DateTime src)
+        public static string TimeIntervalCN(this DateTime? src)
         {
             return ToRead(src as DateTime?);
         }

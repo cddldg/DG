@@ -1,9 +1,12 @@
 ﻿using DG.Core.Entities;
 using DG.Core.Entities.Enum;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+
 
 namespace DG.Application.Users.Dtos
 {
@@ -44,6 +47,7 @@ namespace DG.Application.Users.Dtos
         /// <summary>
         /// 性别
         /// </summary>
+        [JsonConverter(typeof(StringEnumConverter))]
         public Gender? Gender { get; set; }
 
         /// <summary>
@@ -65,5 +69,6 @@ namespace DG.Application.Users.Dtos
         /// 登录次数
         /// </summary>
         public int LogOnCount { get; set; }
+
     }
 }

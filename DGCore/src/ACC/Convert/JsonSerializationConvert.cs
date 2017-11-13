@@ -163,4 +163,41 @@ namespace ACC.Convert
             }
         }
     }
+    public class EnumConverter : JsonConverter
+    {
+        /// <summary>
+        /// Json序列化：Long转string
+        /// </summary>
+        public EnumConverter()
+        {
+
+        }
+        public override bool CanConvert(Type objectType)
+        {
+            return true;
+        }
+
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        {
+            try
+            {
+                return  reader.Value.TryInt();
+            }
+            catch (Exception)
+            {
+                throw new ACCException($"{reader.Value} To {objectType}转换失败.");
+            }
+        }
+
+        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        {
+            if (value == null)
+            {
+                writer.WriteNull();
+                return;
+            }
+            writer.WriteValue(value.ToString());
+        }
+    }
+
 }

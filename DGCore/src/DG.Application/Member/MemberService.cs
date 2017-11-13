@@ -25,7 +25,10 @@ namespace DG.Application.Member
 
         public void Dispose()
         {
-
+            //if (_dbContext != null)
+            //{
+            //    _dbContext.Dispose();
+            //}
         }
     }
 }
