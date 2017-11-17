@@ -276,7 +276,6 @@ namespace IdentityServer4.Quickstart.UI
             {
                 return Redirect(returnUrl);
             }
-
             return Redirect("~/");
         }
 
