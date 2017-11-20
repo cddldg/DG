@@ -1,0 +1,66 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TypeScriptToolsVersion>2.3</TypeScriptToolsVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="App_Data\**" />
+    <Compile Remove="Logs\**" />
+    <Compile Remove="weblog\**" />
+    <Content Remove="App_Data\**" />
+    <Content Remove="Logs\**" />
+    <Content Remove="weblog\**" />
+    <EmbeddedResource Remove="App_Data\**" />
+    <EmbeddedResource Remove="Logs\**" />
+    <EmbeddedResource Remove="weblog\**" />
+    <None Remove="App_Data\**" />
+    <None Remove="Logs\**" />
+    <None Remove="weblog\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.0" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.0-beta04" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1-preview-10073" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\plugin\layui\font\iconfont.svg" />
+    <None Include="wwwroot\plugin\layui\layui.all.js" />
+    <None Include="wwwroot\plugin\layui\layui.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\carousel.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\code.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\element.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\flow.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\form.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\jquery.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\laydate.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\layedit.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\layer.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\laypage.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\laytpl.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\mobile.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\tree.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\upload.js" />
+    <None Include="wwwroot\plugin\layui\lay\modules\util.js" />
+    <None Include="wwwroot\plugin\layui\mymodules\token.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DG.Application\DG.Application.csproj" />
+    <ProjectReference Include="..\DG.Controllers.Api\DG.Controllers.Api.csproj" />
+    <ProjectReference Include="..\DG.EntityFramework\DG.EntityFramework.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+</Project>
