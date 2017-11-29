@@ -8,6 +8,18 @@
     <PackageIconUrl>http://test.file.pisen.com.cn:9212/QJW3C1000/Product/201709/15400143177388.png</PackageIconUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/cddldg/DG.git</RepositoryUrl>
+    <Version>1.0.3</Version>
+    <PackageReleaseNotes>添加注释</PackageReleaseNotes>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard2.0\ACC.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard2.0\ACC.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

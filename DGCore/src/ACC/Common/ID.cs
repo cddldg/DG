@@ -5,8 +5,14 @@ using System.Text;
 
 namespace ACC.Common
 {
+    /// <summary>
+    /// ID
+    /// </summary>
     public static class ID
     {
+        /// <summary>
+        /// Guid
+        /// </summary>
         public static string CreateGuid
         {
             get
@@ -15,6 +21,9 @@ namespace ACC.Common
                 return id.ToString("N").ToLower();
             }
         }
+        /// <summary>
+        /// SnowflakeId
+        /// </summary>
         public static long CreateSnowflakeId
         {
             get

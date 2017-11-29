@@ -3,10 +3,18 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+
 namespace ACC.Common
 {
+    /// <summary>
+    /// 用户
+    /// </summary>
     public class UserHelper
     {
+        /// <summary>
+        /// 用户密钥
+        /// </summary>
+        /// <returns></returns>
         public static string GenUserSecretkey()
         {
             string no = CreateNo();
@@ -14,6 +22,10 @@ namespace ACC.Common
             return secretkey;
         }
 
+        /// <summary>
+        /// 随机编号
+        /// </summary>
+        /// <returns></returns>
         public static string CreateNo()
         {
             Random random = new Random();
