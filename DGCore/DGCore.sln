@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{469F73FA-1CD7-422D-ACA9-A33AA7387AF1}"
 EndProject
@@ -26,7 +26,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{BEDB92EF-A91
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{627091FC-AEB9-4E19-92C8-EE5FB80D8715}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DG.Web.UI", "src\DG.Web.UI\DG.Web.UI.csproj", "{A3A8195C-844B-4923-838C-5F5E655E42AB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DG.Web.UI", "src\DG.Web.UI\DG.Web.UI.csproj", "{A3A8195C-844B-4923-838C-5F5E655E42AB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestWeb", "test\TestWeb\TestWeb.csproj", "{C703BBE1-3C9A-46CD-82D3-D02DC8C9040A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -62,6 +64,10 @@ Global
 		{A3A8195C-844B-4923-838C-5F5E655E42AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A3A8195C-844B-4923-838C-5F5E655E42AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A3A8195C-844B-4923-838C-5F5E655E42AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C703BBE1-3C9A-46CD-82D3-D02DC8C9040A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C703BBE1-3C9A-46CD-82D3-D02DC8C9040A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C703BBE1-3C9A-46CD-82D3-D02DC8C9040A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C703BBE1-3C9A-46CD-82D3-D02DC8C9040A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{5821262A-0B94-446F-9593-BA39F27FCBB8} = {469F73FA-1CD7-422D-ACA9-A33AA7387AF1}
 		{06B7A1D8-6B36-4A6C-97EF-E79706C3B29E} = {469F73FA-1CD7-422D-ACA9-A33AA7387AF1}
 		{A3A8195C-844B-4923-838C-5F5E655E42AB} = {627091FC-AEB9-4E19-92C8-EE5FB80D8715}
+		{C703BBE1-3C9A-46CD-82D3-D02DC8C9040A} = {8059A087-6A0F-4F1D-9C30-D1A170997A41}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {650226B6-D3A1-4D30-BD09-A3854ACCD829}
