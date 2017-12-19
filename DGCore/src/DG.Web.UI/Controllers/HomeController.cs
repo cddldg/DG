@@ -12,6 +12,8 @@ namespace DG.Web.UI.Controllers
     {
         public IActionResult Index()
         {
+            var p = new SpeechDemo();
+            p.Tts();
             return View();
         }
 
