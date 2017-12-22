@@ -11,14 +11,18 @@ using Senparc.Weixin.MP.Entities.Request;
 using System.IO;
 using DG.Web.WX.Service;
 using Senparc.Weixin.MP.MvcExtension;
-
+using Microsoft.AspNetCore.Hosting;
 
 namespace DG.Web.WX.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IHostingEnvironment _hostingEnvironment;
 
-
+        public HomeController(IHostingEnvironment hostingEnvironment)
+        {
+            _hostingEnvironment = hostingEnvironment;
+        }
         /// <summary>
         /// 微信后台验证地址（使用Get），微信后台的“接口配置信息”的Url填写如：http://weixin.senparc.com/weixin
         /// </summary>
@@ -57,7 +61,7 @@ namespace DG.Web.WX.Controllers
             //获取request的响应  
             var memoryStream = new MemoryStream();
             Request.Body.CopyTo(memoryStream);
-            var messageHandler = new CustomMessageHandler(memoryStream, postModel);//接收消息
+            var messageHandler = new CustomMessageHandler(memoryStream, postModel,_hostingEnvironment.WebRootPath);//接收消息
 
             messageHandler.Execute();//执行微信处理过程
             //return new WeixinResult(messageHandler);

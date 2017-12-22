@@ -28,6 +28,7 @@ namespace ACC.SDK.Baidu.Api
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="path"></param>
         /// <param name="options">
         /// 参数	可需	描述
         /// tex 必填  合成的文本，使用UTF-8编码。小于512个中文字或者英文数字。（文本在百度服务器内转换为GBK后，长度必须小于1024字节）
@@ -40,7 +41,7 @@ namespace ACC.SDK.Baidu.Api
         /// vol 选填 音量，取值0-15，默认为5中音量
         /// per 选填 发音人选择, 0为普通女声，1为普通男生，3为情感合成-度逍遥，4为情感合成-度丫丫，默认为普通女声
         /// </param>
-        public static string Text2Audio(Dictionary<string, string> options)
+        public static string Text2Audio(string path,Dictionary<string, string> options)
         {
             var getUrl = $"{text2AudioUrl}?";
             if (options != null)
@@ -51,8 +52,8 @@ namespace ACC.SDK.Baidu.Api
                 }
             }
 
-            //var result = HttpClientHelper.HttpGetData(getUrl);
-            //File.WriteAllBytes("baidu.mp3", result.Data); 
+            var result = HttpClientHelper.HttpGetData(getUrl);
+            File.WriteAllBytes(path, result.Data); 
             return getUrl;
         }
 
